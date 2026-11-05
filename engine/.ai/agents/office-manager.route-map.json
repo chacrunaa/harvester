@@ -1,0 +1,30 @@
+{
+  "agent": "office-manager",
+  "inputs": [
+    {
+      "name": "start",
+      "path": ".ai/chats/office-manager/start.md",
+      "required": true
+    },
+    {
+      "name": "pipeline-state",
+      "path": ".ai/pipeline-state.json",
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "name": "incidents",
+      "path": ".ai/chats/office-manager/incidents.md"
+    },
+    {
+      "name": "rejected-requests",
+      "path": ".ai/chats/office-manager/rejected-requests.md"
+    },
+    {
+      "name": "finish",
+      "path": ".ai/chats/office-manager/finish.md"
+    }
+  ],
+  "routing": []
+}

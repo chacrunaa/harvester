@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "group": "plan",
+  "rules": [
+    "Planning покрывает три последовательных стадии: intake (intake), analysis (аналитик), architecture (архитектор)."
+  ],
+  "task_memory_index": []
+}

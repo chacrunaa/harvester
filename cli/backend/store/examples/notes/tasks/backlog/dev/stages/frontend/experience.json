@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "stage": "frontend",
+  "role": "frontend-developer",
+  "rules": [
+    "Frontend stage consumes backend report as the API contract handoff.",
+    "If task has no frontend work, create an explicit no_frontend_changes report instead of skipping artifacts."
+  ],
+  "task_memory_index": []
+}

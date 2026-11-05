@@ -1,0 +1,48 @@
+{
+  "agent": "testing/qa",
+  "inputs": [
+    {
+      "name": "brief-development",
+      "path": ".ai/chats/testing/brief-development.md",
+      "required": true
+    },
+    {
+      "name": "experience",
+      "path": ".ai/chats/testing/qa/experience.md",
+      "required": false
+    },
+    {
+      "name": "clarifications-response",
+      "path": ".ai/chats/testing/qa/clarifications-response.md",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "clarifications",
+      "path": ".ai/chats/testing/qa/clarifications.md"
+    },
+    {
+      "name": "report",
+      "path": ".ai/chats/testing/qa/report.md"
+    },
+    {
+      "name": "logs",
+      "path": ".ai/chats/testing/qa/logs.txt"
+    }
+  ],
+  "routing": [
+    {
+      "from": ".ai/chats/testing/qa/clarifications.md",
+      "to": ".ai/chats/systemic/analyst/clarifications/qa.md"
+    },
+    {
+      "from": ".ai/chats/testing/qa/report.md",
+      "to": ".ai/chats/testing/qa-lead/results/qa/report.md"
+    },
+    {
+      "from": ".ai/chats/testing/qa/logs.txt",
+      "to": ".ai/chats/testing/qa-lead/results/qa/logs.txt"
+    }
+  ]
+}

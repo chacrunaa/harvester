@@ -1,0 +1,3 @@
+fake agent wrote history/briefs/analyst/HARV-001.analysis-brief.md
+fake agent wrote history/specifications/HARV-001.developer-spec.md
+fake agent wrote history/memory/analyst/HARV-001.md

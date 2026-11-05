@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-06-05T10:18:10+03:00",
+  "stages_link": "stages.json",
+  "description": "Демонстрационный индекс Harvester-задач с лёгким отображением runtime stage/status. Полное runtime-состояние, события и артефакты хранятся в history/tasks/<TASK_ID>/.",
+  "epics": [
+    {
+      "epic_id": "demo-discovery",
+      "description": "Задачи для демонстрации discovery-потока.",
+      "tasks": [
+        "HARV-001",
+        "HARV-002"
+      ]
+    },
+    {
+      "epic_id": "demo-development",
+      "description": "Задача для демонстрации development-потока.",
+      "tasks": [
+        "HARV-003"
+      ]
+    }
+  ],
+  "tasks": {
+    "HARV-001": {
+      "task_id": "HARV-001",
+      "topic": "Добавить источник данных внешнего API",
+      "description": "Демо-задача на входе: owner должен уточнить бизнес-цель, границы интеграции и ожидаемый результат.",
+      "history_dir": "../../history/tasks/HARV-001",
+      "task_link": "../../history/tasks/HARV-001/task.json",
+      "current_stage": "intake",
+      "status": "new",
+      "revision": 1,
+      "runtime_updated_at": "2026-06-04T19:30:00+03:00"
+    },
+    "HARV-002": {
+      "task_id": "HARV-002",
+      "topic": "Описать импорт CSV с расходами из внешних кабинетов",
+      "description": "Демо-задача для аналитика: требования уже сформулированы owner и ждут анализа.",
+      "history_dir": "../../history/tasks/HARV-002",
+      "task_link": "../../history/tasks/HARV-002/task.json",
+      "current_stage": "analysis",
+      "status": "ready_for_next_stage",
+      "revision": 2,
+      "runtime_updated_at": "2026-06-04T19:30:00+03:00"
+    },
+    "HARV-003": {
+      "task_id": "HARV-003",
+      "topic": "Реализовать backend для статуса синхронизации данных",
+      "description": "Демо-задача для backend-разработчика: аналитик и архитектор уже подготовили входные документы.",
+      "history_dir": "../../history/tasks/HARV-003",
+      "task_link": "../../history/tasks/HARV-003/task.json",
+      "current_stage": "backend",
+      "status": "ready_for_next_stage",
+      "revision": 4,
+      "runtime_updated_at": "2026-06-04T19:30:00+03:00"
+    }
+  }
+}

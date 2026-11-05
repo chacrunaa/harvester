@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "run_id": "RUN-HARV-001-001",
+  "task_id": "HARV-001",
+  "stage_id": "analysis",
+  "status": "succeeded",
+  "summary": "fake run for analysis (success)",
+  "artifacts": [
+    {
+      "type": "brief",
+      "path": "history/briefs/analyst/HARV-001.analysis-brief.md",
+      "description": "fake artifact for analysis"
+    },
+    {
+      "type": "specification",
+      "path": "history/specifications/HARV-001.developer-spec.md",
+      "description": "fake artifact for analysis"
+    },
+    {
+      "type": "memory",
+      "path": "history/memory/analyst/HARV-001.md",
+      "description": "fake artifact for analysis"
+    }
+  ],
+  "questions": [],
+  "incidents": [],
+  "next_action": "advance"
+}

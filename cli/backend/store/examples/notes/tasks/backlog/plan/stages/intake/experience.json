@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "stage": "intake",
+  "role": "product-owner",
+  "rules": [
+    "intake отвечает за intake и пополнение backlog, а не за глубокий анализ реализации.",
+    "Новая задача должна иметь task.json и source.txt до передачи в analysis.",
+    "Если цель или контекст непонятны, фиксировать вопросы в task.json -> questions и не переводить задачу дальше."
+  ],
+  "task_memory_index": []
+}

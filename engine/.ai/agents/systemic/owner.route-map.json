@@ -1,0 +1,63 @@
+{
+  "agent": "systemic/owner",
+  "inputs": [
+    {
+      "name": "brief-business",
+      "path": ".ai/chats/systemic/owner/brief-business.md",
+      "required": true
+    },
+    {
+      "name": "qna-answers",
+      "path": ".ai/chats/systemic/owner/qna.json",
+      "required": false,
+      "condition": "has-answers"
+    },
+    {
+      "name": "recommendation",
+      "path": ".ai/chats/systemic/owner/recommendation.md",
+      "required": false
+    },
+    {
+      "name": "tech-proposal",
+      "path": ".ai/chats/systemic/owner/tech-proposal.md",
+      "required": false
+    },
+    {
+      "name": "spec",
+      "path": ".ai/chats/systemic/owner/spec.md",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "qna",
+      "path": ".ai/chats/systemic/owner/qna.json"
+    },
+    {
+      "name": "task-queue",
+      "path": ".ai/chats/systemic/owner/task-queue.md"
+    },
+    {
+      "name": "current-task",
+      "path": ".ai/chats/systemic/owner/current-task.md"
+    },
+    {
+      "name": "brief-systemic",
+      "path": ".ai/chats/systemic/brief-systemic.md"
+    }
+  ],
+  "routing": [
+    {
+      "from": ".ai/chats/systemic/owner/current-task.md",
+      "to": ".ai/chats/systemic/analyst/current-task.md"
+    },
+    {
+      "from": ".ai/chats/systemic/brief-systemic.md",
+      "to": ".ai/chats/development/brief-systemic.md"
+    },
+    {
+      "from": ".ai/chats/systemic/brief-systemic.md",
+      "to": ".ai/chats/testing/brief-systemic.md"
+    }
+  ]
+}

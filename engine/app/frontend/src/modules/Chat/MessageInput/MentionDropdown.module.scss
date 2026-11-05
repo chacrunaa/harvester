@@ -1,0 +1,40 @@
+.root {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 12px;
+  right: 12px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  z-index: 100;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover,
+  &.active {
+    background: rgba(0, 98, 90, 0.08);
+  }
+}
+
+.mention {
+  color: #00625a;
+  font-weight: 500;
+  font-family: monospace;
+}
+
+.title {
+  color: rgba(0, 0, 0, 0.55);
+}

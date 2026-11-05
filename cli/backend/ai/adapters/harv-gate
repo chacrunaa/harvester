@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+# Claude Code PreToolUse gate for the harvester pipeline.
+# When a harv role is active, blocks writes that bypass the .notes pipeline.
+# Scope:
+#   - role plan / review : block any Write/Edit outside <project>/.notes/**
+#   - any role                   : block writes into tmp/ or scratch/ sinks
+#   - role dev/testing: product-code edits pass (that IS the work)
+# Escape hatch: turn-mode == "ask" (set by harv-ask) -> always allow.
+
+set -euo pipefail
+
+BACKEND="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+HARV_DIR="$HOME/.harv"
+ROLE_FILE="$HARV_DIR/role"
+MODE_FILE="$HARV_DIR/turn-mode"
+ACTIVE_FILE="$HARV_DIR/active"
+
+allow() { echo '{"continue":true}'; exit 0; }
+deny() {
+  python3 -c "
+import sys, json
+print(json.dumps({'hookSpecificOutput': {
+  'hookEventName': 'PreToolUse',
+  'permissionDecision': 'deny',
+  'permissionDecisionReason': sys.stdin.read(),
+}}))" <<< "$1"
+  exit 0
+}
+
+role="$(cat "$ROLE_FILE" 2>/dev/null | tr -d '[:space:]')"
+[ -z "$role" ] && allow                         # no active role -> not gated
+
+mode="$(cat "$MODE_FILE" 2>/dev/null | tr -d '[:space:]')"
+[ "$mode" = "ask" ] && allow                     # sanctioned out-of-pipeline answer
+
+input="$(cat)"
+parsed="$(echo "$input" | python3 -c "
+import sys, json
+d = json.load(sys.stdin)
+ti = d.get('tool_input') or {}
+p = ti.get('file_path') or ti.get('path') or ti.get('notebook_path') or ''
+print(d.get('tool_name',''))
+print(p)
+" 2>/dev/null || printf '\n')"
+tool="$(printf '%s' "$parsed" | sed -n '1p')"
+path="$(printf '%s' "$parsed" | sed -n '2p')"
+
+case "$tool" in
+  Write|Edit|MultiEdit|NotebookEdit) ;;
+  *) allow ;;
+esac
+[ -z "$path" ] && allow
+
+label="$(cat "$ACTIVE_FILE" 2>/dev/null | tr -d '[:space:]')"
+notes_root="$BACKEND/projects/$label/.notes"
+
+# Artifact writes into the pipeline are always fine.
+case "$path" in
+  "$notes_root"/*) allow ;;
+esac
+
+# tmp / scratch sinks are forbidden in any role (this was the demonstrated bypass).
+case "$path" in
+  */tmp/*|/tmp/*|*/scratch/*|*/.tmp/*)
+    deny "[HARV GATE] Запись в tmp/scratch запрещена (роль $role). Результаты и артефакты пишутся только в ${notes_root}/history/**. Для разового ответа вне pipeline используй команду: harv-ask <текст>." ;;
+esac
+
+# Planning and review produce only .notes artifacts -> nothing outside .notes.
+case "$role" in
+  plan|review)
+    deny "[HARV GATE] Роль $role пишет только в .notes. Путь '${path}' вне ${notes_root}. Возьми/заведи задачу (harv-new или harv-do <ID>) и пиши артефакт в history/**, либо harv-ask для ответа вне pipeline." ;;
+esac
+
+# Development / testing roles may edit the product codebase.
+allow

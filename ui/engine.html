@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Движок конвейера — Harvester</title>
+<meta name="description" content="Go-движок многоагентного конвейера: watcher на fsnotify, AND-гейты между фазами, REST и WebSocket, интерфейс на React.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='14'>&#9730;</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+
+  <div class="topbar">
+    <a class="back" href="index.html">← Harvester</a>
+    <span class="tag">v1 · engine/</span>
+  </div>
+
+  <h1>Движок конвейера</h1>
+  <p class="lead">
+    Go-сервис ведёт задачу по четырём фазам. Агенты не вызывают друг друга —
+    они пишут файлы. Watcher замечает изменение через <code>fsnotify</code>,
+    по карте маршрутов перекладывает результат во входной каталог следующего
+    агента и запускает его. Фаза двигается, когда завершился её оркестратор.
+  </p>
+
+  <h2>Прогон конвейера</h2>
+  <p>
+    Ниже — запись настоящего прогона. Её делает <code>make trace</code>:
+    программа поднимает тот самый <code>PipelineWatcher</code> на временном
+    каталоге и отмечает агентов завершёнными, как это делал бы живой агент.
+    Порядок фаз, AND-гейты и переключение фаз здесь — рабочий код, а не
+    пересказ. Вызовов модели нет, поэтому ключи не нужны.
+  </p>
+
+  <div class="player">
+    <div class="player-head">
+      <strong>Задача DEMO-001</strong>
+      <div class="src">Источник: <code>ui/data/engine-run.js</code>, сгенерирован <code>.ai/scripts/cmd/pipeline-trace</code></div>
+    </div>
+
+    <div class="phases" id="phases"></div>
+
+    <div class="controls">
+      <button class="primary" id="play" type="button">▸ Играть</button>
+      <button id="step" type="button">Шаг</button>
+      <button id="reset" type="button">В начало</button>
+      <input type="range" id="range" min="0" value="0" aria-label="Позиция в прогоне">
+      <span class="counter" id="counter">— / —</span>
+    </div>
+
+    <div class="log" id="log"></div>
+  </div>
+
+  <p class="small muted">
+    Пробел — играть и пауза, стрелки — шаг. По строке журнала можно кликнуть.
+  </p>
+
+  <h3>Что видно в записи</h3>
+  <table>
+    <tr><th>Момент</th><th>Что происходит</th></tr>
+    <tr>
+      <td>Фаза <code>business</code></td>
+      <td>Четыре аналитика уходят в работу одновременно. Фаза не двигается, пока хотя бы один из них не завершён.</td>
+    </tr>
+    <tr>
+      <td>AND-гейт в <code>development</code></td>
+      <td>В журнале появляется <code>agent_triggered development/reviewers</code> — ровно в тот момент, когда <code>backend</code> и <code>frontend</code> оба стали <code>done</code>. Это и есть гейт из <code>andGates</code>.</td>
+    </tr>
+    <tr>
+      <td><code>phase_advanced</code></td>
+      <td>Переход фазы происходит после завершения оркестратора, а не после всех агентов подряд.</td>
+    </tr>
+  </table>
+
+  <h2>Как устроено</h2>
+
+  <h3>Два Go-модуля</h3>
+  <pre><code>engine/
+  .ai/scripts/        модуль harvester/scripts — движок
+    pipeline-watcher.go   fsnotify, phaseOrder, andGates, переходы фаз
+    pipeline-state.go     чтение и атомарная запись состояния
+    agent-runner.go       запуск агента
+    lib/
+      context-builder.go  сборка контекста по карте маршрутов
+      llm-client.go       4 провайдера, ретраи
+      response-parser.go  разбор &lt;file name="…"&gt;, поиск вопросов
+      file-io.go          атомарная запись, копирование по маршруту
+  app/backend/        модуль harvester/backend — HTTP и WebSocket
+    internal/{config,domain,repository,service,transport}</code></pre>
+  <p>
+    Второй модуль подключает первый через <code>replace</code> в
+    <code>go.mod</code>, оба перечислены в <code>go.work</code>. Корень
+    репозитория модулем не является, поэтому <code>go build ./...</code>
+    запускается внутри каждого модуля отдельно.
+  </p>
+
+  <h3>Состояние</h3>
+  <p>
+    СУБД нет. Состояние конвейера — это <code>pipeline-state.json</code> в
+    каталоге проекта, который пишется атомарно: временный файл рядом и
+    <code>rename</code> (<code>internal/repository/atomic.go</code>).
+    Поскольку источник правды — файл, его одинаково видят движок, агент и
+    человек с текстовым редактором.
+  </p>
+
+  <h3>API</h3>
+  <table>
+    <tr><th>Маршрут</th><th>Назначение</th></tr>
+    <tr><td><code>GET /health</code></td><td>проба для Docker и Caddy</td></tr>
+    <tr><td><code>GET /ws</code></td><td>WebSocket: состояние, события агентов, вопросы</td></tr>
+    <tr><td><code>GET /api/pipeline/state</code></td><td>текущее состояние конвейера</td></tr>
+    <tr><td><code>POST /api/pipeline/phase/:phase/ok</code><br><code>…/notok</code></td><td>гейт между фазами</td></tr>
+    <tr><td><code>POST /api/pipeline/agent/:name/retry</code><br><code>…/skip</code></td><td>перезапуск и пропуск агента</td></tr>
+    <tr><td><code>GET/POST /api/projects…</code></td><td>список, открытие, создание проекта</td></tr>
+    <tr><td><code>GET/POST /api/qna…</code></td><td>вопросы агента и ответы на них</td></tr>
+    <tr><td><code>GET/POST /api/chats/:phase</code></td><td>переписка по фазе</td></tr>
+    <tr><td><code>GET /api/tasks</code>, <code>GET/POST /api/settings</code></td><td>задачи и настройки провайдера</td></tr>
+  </table>
+
+  <h2>Схемы</h2>
+  <p>
+    Рабочие схемы архитектуры. Исходники — Obsidian Canvas
+    (<code>engine/assets/canvas/</code>); формат проприетарный, поэтому они
+    переведены в SVG скриптом <code>tools/canvas-to-svg.py</code>
+    (<code>make diagrams</code>) и открываются в любом браузере.
+  </p>
+
+  <figure>
+    <div class="diagram">
+      <img src="img/chat-engine.svg" alt="Схема цикла одного хода агента: от сообщения пользователя через загрузку карты маршрутов, сборку контекста и вызов модели до атомарной записи файлов и маршрутизации результата" loading="lazy">
+    </div>
+    <p class="scroll-hint">Схема шире экрана — прокручивается в обе стороны.</p>
+    <figcaption>
+      <strong>Цикл одного хода агента.</strong> Шаги пронумерованы:
+      загрузка <code>route-map.json</code> → сборка контекста из истории и
+      входов → вызов модели → разбор блоков ответа → атомарная запись
+      файлов → проверка <code>qna</code> → копирование результатов по
+      маршрутам → отметка в <code>pipeline-state</code>. Слева — развилки
+      состояния: пока агенты работают, новое сообщение не запускает
+      прогон, а при <code>waiting:qna</code> уходит в обработчик паузы.
+      <a href="img/chat-engine.svg" target="_blank" rel="noopener">Открыть в полный размер</a>
+    </figcaption>
+  </figure>
+
+  <figure>
+    <a href="img/agent-interaction.svg" target="_blank" rel="noopener">
+      <img src="img/agent-interaction.svg" alt="Схема взаимодействия агентов: фазы, параллельные ветки, AND-гейты, точки ожидания approval и обмен уточнениями" loading="lazy">
+    </a>
+    <figcaption>
+      <strong>Взаимодействие агентов и гейты — общий вид.</strong> Граф
+      целиком: где происходит <code>fanout</code>, где стоят AND-гейты и
+      точки <code>wait:approval</code>, как ходят уточнения
+      (<code>clarifications/</code> — асинхронно, не блокируя агента) и
+      куда накапливается <code>experience.md</code>. Это та же механика,
+      которую проигрывает запись выше. Здесь схема сжата по ширине, чтобы
+      была видна форма графа —
+      <a href="img/agent-interaction.svg" target="_blank" rel="noopener">откройте в полный размер</a>,
+      чтобы прочитать подписи.
+    </figcaption>
+  </figure>
+
+  <h2>Интерфейс</h2>
+  <figure>
+    <img src="img/engine-ui.jpg" alt="Веб-интерфейс Harvester: слева список проектов, в центре чат с вкладками по фазам, справа панели состояния и отчётов" loading="lazy">
+    <figcaption>
+      React 18 + TypeScript + MUI + Vite. Слева проекты, в центре чат с
+      вкладками по фазам, справа состояние и отчёты. Панели справа — ещё
+      заглушки, это видно на скриншоте и честно отмечено в ограничениях.
+    </figcaption>
+  </figure>
+
+  <h2>Запуск и проверки</h2>
+  <pre><code>cd engine
+cp infra/.env.example infra/.env     # выбрать провайдера, вписать один ключ
+make install                         # go mod download + npm ci
+make dev                             # API :3100, интерфейс :5173
+
+make test                            # 38 Go-тестов + typecheck фронтенда
+make trace                           # перезаписать данные для этой страницы
+
+docker build -f infra/docker/Dockerfile -t harvester/api .
+curl localhost:3100/health           # {"status":"ok"}</code></pre>
+
+  <h3>Тесты</h3>
+  <table>
+    <tr><th>Модуль</th><th>Тестов</th><th>Что покрыто</th></tr>
+    <tr><td><code>.ai/scripts</code></td><td>34</td><td>переходы фаз, AND-гейт, сборка контекста, разбор ответа модели, атомарная запись</td></tr>
+    <tr><td><code>app/backend</code></td><td>4</td><td>карта маршрутов, <code>/health</code>, CORS и preflight</td></tr>
+  </table>
+
+  <h2>Ограничения</h2>
+  <div class="note warn">
+    <p><strong>Десктоп-сборка на Tauri не работает.</strong>
+    Оболочка написана, но <code>src-tauri/src/lib.rs</code> ищет sidecar по
+    пути <code>app/backend/dist/main.js</code> и запускает его через
+    <code>node</code> — это осталось от более ранней версии бэкенда на
+    NestJS. Нынешний Go-бэкенд говорит по HTTP. Рабочий режим — веб.</p>
+    <p><strong>Правая колонка интерфейса — заглушки.</strong>
+    <code>StatusPanel</code> и <code>ReportsPanel</code> ещё не реализованы.</p>
+    <p><strong><code>templates/web|mobile|desktop</code> — это спецификации.</strong>
+    30 markdown-файлов с описанием модулей и ожидаемой структуры, без кода.
+    В новый проект копируется только <code>templates/ai/</code>.</p>
+    <p><strong>Инфраструктура не развёрнута.</strong> Terraform для двух
+    облаков, cloud-init и Caddy описаны, но на сервер не выкатывались.
+    CI в репозитории нет. Docker-образ собирается и проходит healthcheck.</p>
+    <p><strong>Слои <code>service</code> и <code>repository</code> бэкенда
+    без тестов.</strong></p>
+  </div>
+
+  <footer>
+    Код: <code>engine/</code>. Подробности — <code>engine/README.md</code>,
+    устройство движка — <code>engine/.ai/README.md</code>.
+  </footer>
+
+</main>
+<script src="data/engine-run.js"></script>
+<script src="replay.js"></script>
+</body>
+</html>

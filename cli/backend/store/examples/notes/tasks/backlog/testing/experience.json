@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "group": "testing",
+  "rules": [
+    "Testing group currently routes only to testing."
+  ],
+  "task_memory_index": []
+}

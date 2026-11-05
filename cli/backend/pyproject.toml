@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentforge-notes"
+version = "0.1.0"
+description = "Local .notes runtime helper for AgentForge."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+harv = "agentforge_notes.cli:main"
+notes = "agentforge_notes.cli:main"
+forge = "agentforge_launcher.cli:main"
+agentforge = "agentforge_launcher.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "app/src"}
+
+[tool.setuptools.packages.find]
+where = ["app/src"]

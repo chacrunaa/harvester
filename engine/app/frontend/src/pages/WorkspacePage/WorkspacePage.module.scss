@@ -1,0 +1,113 @@
+@use '@/app/styles/variables' as *;
+
+.root {
+  display: flex;
+  flex-direction: row;
+  gap: $gap-main-inner;
+  width: 100%;
+  height: 100%;
+
+  @media (max-width: $bp-tablet) {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.activeChat {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: $gap-active-chat;
+  min-width: 0;
+  min-height: 0;
+}
+
+.activeChatHeader {
+  height: $size-section-header-h;
+  background: #ffffff;
+  border-bottom: 1px solid $color-brand-teal;
+  border-bottom-left-radius: $radius-section;
+  border-bottom-right-radius: $radius-section;
+}
+
+.activeChatBody {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  background: #ffffff;
+  border: 1px solid $border-divider;
+  border-top-left-radius: $radius-section;
+  border-top-right-radius: $radius-section;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.reportAndStatus {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: $gap-report-status;
+  padding: 0 $space-main-x;
+  min-width: 0;
+  min-height: 0;
+}
+
+.statusZone {
+  height: $size-status-zone-h;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.reportsZone {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.sectionHeader {
+  height: $size-section-header-h;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: #ffffff;
+  border-bottom: 1px solid $color-brand-teal;
+  border-bottom-left-radius: $radius-section;
+  border-bottom-right-radius: $radius-section;
+  font-size: $font-overline;
+  font-weight: 400;
+  line-height: 2.66;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: $text-primary;
+}
+
+.statusBody {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.reportsBody {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  min-height: 0;
+}
+
+.placeholder {
+  color: $text-muted;
+  font-size: $font-body2;
+  font-weight: 300;
+  text-align: center;
+}

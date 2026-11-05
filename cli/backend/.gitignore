@@ -1,0 +1,60 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+/dist/
+/build/
+/site/
+/coverage/
+*.tsbuildinfo
+
+# Python / MkDocs tooling
+/.cache/
+/.venv/
+/.pytest_cache/
+/.mypy_cache/
+/.ruff_cache/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# IDE
+/.idea/
+/.vscode/
+docs/architecture/canvas/.obsidian/
+
+# AI tooling — локальные рабочие артефакты
+/.agents/
+/.codex/
+/.agentforge/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment & secrets — plaintext никогда не коммитим
+.env
+.env.*
+!.env.example
+
+# Local data stores
+/harvester.db
+/harvester.db-shm
+/harvester.db-wal
+
+# Local notes runtime
+/.notes/
+
+# Local project links. Симлинки — локальные, не коммитим. Сохраняем папки work/ и personal/.
+/projects/work/*
+/projects/personal/*
+!/projects/work/
+!/projects/personal/
+!/projects/personal/.gitkeep

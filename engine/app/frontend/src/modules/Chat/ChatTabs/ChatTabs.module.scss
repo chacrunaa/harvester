@@ -1,0 +1,31 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  padding: 0 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.tab {
+  padding: 8px 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 13px;
+  cursor: pointer;
+
+  &:disabled {
+    color: rgba(0, 0, 0, 0.3);
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    color: rgba(0, 0, 0, 0.85);
+  }
+}
+
+.tabActive {
+  color: #00625a;
+  border-bottom-color: #00625a;
+}

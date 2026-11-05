@@ -1,0 +1,43 @@
+{
+  "agent": "systemic/architect",
+  "inputs": [
+    {
+      "name": "arch-questions",
+      "path": ".ai/chats/systemic/architect/arch-questions.md",
+      "required": true
+    },
+    {
+      "name": "experience",
+      "path": ".ai/chats/systemic/architect/experience.md",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "recommendation",
+      "path": ".ai/chats/systemic/architect/recommendation.md"
+    },
+    {
+      "name": "tech-proposal",
+      "path": ".ai/chats/systemic/architect/tech-proposal.md"
+    },
+    {
+      "name": "arch-answers",
+      "path": ".ai/chats/systemic/architect/arch-answers.md"
+    }
+  ],
+  "routing": [
+    {
+      "from": ".ai/chats/systemic/architect/recommendation.md",
+      "to": ".ai/chats/systemic/owner/recommendation.md"
+    },
+    {
+      "from": ".ai/chats/systemic/architect/tech-proposal.md",
+      "to": ".ai/chats/systemic/owner/tech-proposal.md"
+    },
+    {
+      "from": ".ai/chats/systemic/architect/arch-answers.md",
+      "to": ".ai/chats/systemic/analyst/arch-answers.md"
+    }
+  ]
+}

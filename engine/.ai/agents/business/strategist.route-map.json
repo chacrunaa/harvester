@@ -1,0 +1,37 @@
+{
+  "agent": "business/strategist",
+  "inputs": [
+    {
+      "name": "cross-brief",
+      "path": ".ai/chats/business/cross-brief.md",
+      "required": true
+    },
+    {
+      "name": "experience",
+      "path": ".ai/chats/business/strategist/experience.md",
+      "required": false
+    },
+    {
+      "name": "qna-answers",
+      "path": ".ai/chats/business/strategist/qna.json",
+      "required": false,
+      "condition": "has-answers"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "qna",
+      "path": ".ai/chats/business/strategist/qna.json"
+    },
+    {
+      "name": "report",
+      "path": ".ai/chats/business/strategist/report.md"
+    }
+  ],
+  "routing": [
+    {
+      "from": ".ai/chats/business/strategist/report.md",
+      "to": ".ai/chats/business/product-manager/reports/strategist.md"
+    }
+  ]
+}

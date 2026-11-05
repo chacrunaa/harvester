@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "task_id": "HARV-002",
+  "topic": "Описать импорт CSV с расходами из внешних кабинетов",
+  "source": {
+    "path": "source.txt",
+    "source_id_mismatch": false
+  },
+  "backlog": {
+    "index_link": "../../../tasks/backlog/tasks.json",
+    "stages_link": "../../../tasks/backlog/stages.json",
+    "queue_link": "../../../tasks/backlog/plan/stages/analysis/queue.json"
+  },
+  "runtime": {
+    "current_stage": "analysis",
+    "status": "ready_for_next_stage",
+    "revision": 2,
+    "lease": null,
+    "updated_at": "2026-06-04T19:30:00+03:00"
+  },
+  "artifacts": {
+    "briefs": [],
+    "specifications": [],
+    "reports": [],
+    "memory": [],
+    "chats": [],
+    "questions": []
+  },
+  "questions": [],
+  "events": [
+    {
+      "at": "2026-06-04T19:30:00+03:00",
+      "type": "task_created",
+      "stage": "intake",
+      "status": "new",
+      "actor": "demo-seed"
+    },
+    {
+      "at": "2026-06-04T19:30:00+03:00",
+      "type": "task_moved",
+      "stage": "analysis",
+      "status": "ready_for_next_stage",
+      "actor": "demo-seed",
+      "note": "intake -> analysis"
+    }
+  ]
+}

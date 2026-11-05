@@ -1,0 +1,41 @@
+{
+  "agent": "development/frontend",
+  "codeOutputDir": "app/frontend",
+  "inputs": [
+    {
+      "name": "brief-systemic",
+      "path": ".ai/chats/development/brief-systemic.md",
+      "required": true
+    },
+    {
+      "name": "experience",
+      "path": ".ai/chats/development/frontend/experience.md",
+      "required": false
+    },
+    {
+      "name": "clarifications-response",
+      "path": ".ai/chats/development/frontend/clarifications-response.md",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "clarifications",
+      "path": ".ai/chats/development/frontend/clarifications.md"
+    },
+    {
+      "name": "report",
+      "path": ".ai/chats/development/frontend/report.md"
+    }
+  ],
+  "routing": [
+    {
+      "from": ".ai/chats/development/frontend/clarifications.md",
+      "to": ".ai/chats/systemic/analyst/clarifications/frontend.md"
+    },
+    {
+      "from": ".ai/chats/development/frontend/report.md",
+      "to": ".ai/chats/development/dev-lead/results/frontend.md"
+    }
+  ]
+}

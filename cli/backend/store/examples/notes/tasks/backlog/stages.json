@@ -1,0 +1,295 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-06-10T00:00:00+03:00",
+  "protocol": {
+    "task_id_format": "HARV-<number>, номер дополняется нулями до трёх знаков: HARV-001",
+    "single_writer_rule": "Каждый чат берёт только задачи, у которых current_stage совпадает с его стадией.",
+    "before_write_rule": "Перед любым изменением агент перечитывает history/tasks/<TASK_ID>/task.json и проверяет runtime.revision, runtime.current_stage и runtime.lease.",
+    "after_write_rule": "После записи артефактов агент увеличивает runtime.revision, добавляет событие в events и переносит task_id между queue.json стадий.",
+    "lease_ttl_minutes": 120
+  },
+  "status_catalog": [
+    "new",
+    "in_progress",
+    "questions",
+    "blocked",
+    "ready_for_next_stage",
+    "needs_adjustment",
+    "done"
+  ],
+  "stages": [
+    {
+      "id": "intake",
+      "group": "plan",
+      "role": "product-owner",
+      "directory": "plan/stages/intake",
+      "instructions": "plan/stages/intake/README.md",
+      "required_inputs": [
+        "tasks.json",
+        "stages.json",
+        "plan/stages/intake/queue.json",
+        "plan/stages/intake/experience.json"
+      ],
+      "required_outputs_on_success": [
+        "history/tasks/<TASK_ID>/task.json",
+        "history/tasks/<TASK_ID>/source.txt"
+      ],
+      "transitions": {
+        "success": {
+          "next_stage": "analysis",
+          "next_status": "ready_for_next_stage"
+        },
+        "questions": {
+          "next_stage": "intake",
+          "next_status": "questions"
+        },
+        "blocked": {
+          "next_stage": "intake",
+          "next_status": "blocked"
+        }
+      }
+    },
+    {
+      "id": "analysis",
+      "group": "plan",
+      "role": "analyst",
+      "directory": "plan/stages/analysis",
+      "instructions": "plan/stages/analysis/README.md",
+      "required_inputs": [
+        "tasks.json",
+        "history/tasks/<TASK_ID>/task.json",
+        "history/tasks/<TASK_ID>/source.txt",
+        "plan/stages/analysis/experience.json"
+      ],
+      "required_outputs_on_success": [
+        "history/briefs/analyst/<TASK_ID>.analysis-brief.md",
+        "history/specifications/<TASK_ID>.developer-spec.md",
+        "history/memory/analyst/<TASK_ID>.md"
+      ],
+      "transitions": {
+        "success": {
+          "next_stage": "architecture",
+          "next_status": "ready_for_next_stage"
+        },
+        "questions": {
+          "next_stage": "analysis",
+          "next_status": "questions"
+        },
+        "blocked": {
+          "next_stage": "analysis",
+          "next_status": "blocked"
+        }
+      }
+    },
+    {
+      "id": "architecture",
+      "group": "plan",
+      "role": "architect",
+      "directory": "plan/stages/architecture",
+      "instructions": "plan/stages/architecture/README.md",
+      "required_inputs": [
+        "tasks.json",
+        "history/tasks/<TASK_ID>/task.json",
+        "history/tasks/<TASK_ID>/source.txt",
+        "history/briefs/analyst/<TASK_ID>.analysis-brief.md",
+        "history/specifications/<TASK_ID>.developer-spec.md",
+        "history/memory/analyst/<TASK_ID>.md",
+        "plan/stages/architecture/experience.json"
+      ],
+      "required_outputs_on_success": [
+        "history/reports/architect/<TASK_ID>.architecture-report.md",
+        "history/memory/architect/<TASK_ID>.md"
+      ],
+      "transitions": {
+        "success": {
+          "next_stage": "backend",
+          "next_status": "ready_for_next_stage"
+        },
+        "analysis_adjustment": {
+          "next_stage": "analysis",
+          "next_status": "needs_adjustment"
+        },
+        "blocked": {
+          "next_stage": "architecture",
+          "next_status": "blocked"
+        }
+      }
+    },
+    {
+      "id": "backend",
+      "group": "dev",
+      "role": "backend-developer",
+      "directory": "dev/stages/backend",
+      "instructions": "dev/stages/backend/README.md",
+      "required_inputs": [
+        "tasks.json",
+        "history/tasks/<TASK_ID>/task.json",
+        "history/specifications/<TASK_ID>.developer-spec.md",
+        "history/reports/architect/<TASK_ID>.architecture-report.md",
+        "dev/stages/backend/experience.json"
+      ],
+      "required_outputs_on_success": [
+        "history/reports/developer/backend/<TASK_ID>.backend-report.md",
+        "history/memory/developer/backend/<TASK_ID>.md"
+      ],
+      "transitions": {
+        "success": {
+          "next_stage": "frontend",
+          "next_status": "ready_for_next_stage"
+        },
+        "blocked": {
+          "next_stage": "backend",
+          "next_status": "blocked"
+        }
+      }
+    },
+    {
+      "id": "frontend",
+      "group": "dev",
+      "role": "frontend-developer",
+      "directory": "dev/stages/frontend",
+      "instructions": "dev/stages/frontend/README.md",
+      "required_inputs": [
+        "tasks.json",
+        "history/tasks/<TASK_ID>/task.json",
+        "history/specifications/<TASK_ID>.developer-spec.md",
+        "history/reports/architect/<TASK_ID>.architecture-report.md",
+        "history/reports/developer/backend/<TASK_ID>.backend-report.md",
+        "dev/stages/frontend/experience.json"
+      ],
+      "required_outputs_on_success": [
+        "history/reports/developer/frontend/<TASK_ID>.frontend-report.md",
+        "history/memory/developer/frontend/<TASK_ID>.md"
+      ],
+      "transitions": {
+        "success": {
+          "next_stage": "integration",
+          "next_status": "ready_for_next_stage"
+        },
+        "blocked": {
+          "next_stage": "frontend",
+          "next_status": "blocked"
+        }
+      }
+    },
+    {
+      "id": "integration",
+      "group": "dev",
+      "role": "integration-developer",
+      "directory": "dev/stages/integration",
+      "instructions": "dev/stages/integration/README.md",
+      "required_inputs": [
+        "tasks.json",
+        "history/tasks/<TASK_ID>/task.json",
+        "history/specifications/<TASK_ID>.developer-spec.md",
+        "history/reports/architect/<TASK_ID>.architecture-report.md",
+        "history/reports/developer/backend/<TASK_ID>.backend-report.md",
+        "history/reports/developer/frontend/<TASK_ID>.frontend-report.md",
+        "dev/stages/integration/experience.json"
+      ],
+      "required_outputs_on_success": [
+        "history/reports/developer/integration/<TASK_ID>.integration-report.md",
+        "history/reports/developer/<TASK_ID>.developer-report.md",
+        "history/memory/developer/integration/<TASK_ID>.md",
+        "history/memory/developer/<TASK_ID>.md"
+      ],
+      "transitions": {
+        "success": {
+          "next_stage": "test",
+          "next_status": "ready_for_next_stage"
+        },
+        "needs_adjustment": {
+          "next_stage": "backend",
+          "next_status": "needs_adjustment"
+        },
+        "blocked": {
+          "next_stage": "integration",
+          "next_status": "blocked"
+        }
+      }
+    },
+    {
+      "id": "test",
+      "group": "testing",
+      "role": "tester",
+      "directory": "testing/stages/test",
+      "instructions": "testing/stages/test/README.md",
+      "required_inputs": [
+        "tasks.json",
+        "history/tasks/<TASK_ID>/task.json",
+        "history/specifications/<TASK_ID>.developer-spec.md",
+        "history/reports/developer/<TASK_ID>.developer-report.md",
+        "history/reports/developer/integration/<TASK_ID>.integration-report.md",
+        "testing/stages/test/experience.json"
+      ],
+      "required_outputs_on_success": [
+        "history/reports/tester/<TASK_ID>.test-report.md",
+        "history/memory/tester/<TASK_ID>.md",
+        "history/reports/tester/<TASK_ID>.test-instruction.md",
+        "history/reports/tester/<TASK_ID>.terminal.log",
+        "documentations/docs/06-quality/test-cases/<TASK_ID>.md",
+        "documentations/docs/06-quality/test-reports/result.md"
+      ],
+      "transitions": {
+        "success": {
+          "next_stage": "review",
+          "next_status": "ready_for_next_stage"
+        },
+        "needs_adjustment": {
+          "next_stage": "backend",
+          "next_status": "needs_adjustment"
+        },
+        "blocked": {
+          "next_stage": "test",
+          "next_status": "blocked"
+        }
+      }
+    },
+    {
+      "id": "review",
+      "group": "review",
+      "role": "reviewer",
+      "directory": "review/stages/review",
+      "instructions": "review/stages/review/README.md",
+      "required_inputs": [
+        "tasks.json",
+        "history/tasks/<TASK_ID>/task.json",
+        "history/briefs/analyst/<TASK_ID>.analysis-brief.md",
+        "history/specifications/<TASK_ID>.developer-spec.md",
+        "history/reports/architect/<TASK_ID>.architecture-report.md",
+        "history/reports/developer/<TASK_ID>.developer-report.md",
+        "history/reports/developer/backend/<TASK_ID>.backend-report.md",
+        "history/reports/developer/frontend/<TASK_ID>.frontend-report.md",
+        "history/reports/developer/integration/<TASK_ID>.integration-report.md",
+        "history/reports/tester/<TASK_ID>.test-report.md",
+        "review/stages/review/experience.json"
+      ],
+      "required_outputs_on_success": [
+        "history/reports/reviewer/<TASK_ID>.review-report.md",
+        "history/memory/reviewer/<TASK_ID>.md"
+      ],
+      "transitions": {
+        "accepted": {
+          "next_stage": "done",
+          "next_status": "done"
+        },
+        "analysis_adjustment": {
+          "next_stage": "analysis",
+          "next_status": "needs_adjustment"
+        },
+        "architecture_adjustment": {
+          "next_stage": "architecture",
+          "next_status": "needs_adjustment"
+        },
+        "code_adjustment": {
+          "next_stage": "backend",
+          "next_status": "needs_adjustment"
+        },
+        "blocked": {
+          "next_stage": "review",
+          "next_status": "blocked"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "agent": "business/market-analyst",
+  "inputs": [
+    {
+      "name": "cross-brief",
+      "path": ".ai/chats/business/cross-brief.md",
+      "required": true
+    },
+    {
+      "name": "experience",
+      "path": ".ai/chats/business/market-analyst/experience.md",
+      "required": false
+    },
+    {
+      "name": "qna-answers",
+      "path": ".ai/chats/business/market-analyst/qna.json",
+      "required": false,
+      "condition": "has-answers"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "qna",
+      "path": ".ai/chats/business/market-analyst/qna.json"
+    },
+    {
+      "name": "report",
+      "path": ".ai/chats/business/market-analyst/report.md"
+    }
+  ],
+  "routing": [
+    {
+      "from": ".ai/chats/business/market-analyst/report.md",
+      "to": ".ai/chats/business/product-manager/reports/market-analyst.md"
+    }
+  ]
+}

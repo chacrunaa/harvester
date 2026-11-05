@@ -1,0 +1,37 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  padding: 8px 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.input {
+  flex: 1 1 auto;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  border-radius: 6px;
+  font-size: 14px;
+
+  &:disabled {
+    background: rgba(0, 0, 0, 0.04);
+    color: rgba(0, 0, 0, 0.4);
+  }
+}
+
+.button {
+  padding: 8px 16px;
+  border: 1px solid #00625a;
+  border-radius: 6px;
+  background: #00625a;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:disabled {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.4);
+    cursor: not-allowed;
+  }
+}

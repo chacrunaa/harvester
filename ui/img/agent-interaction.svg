@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2836 -1012 3572 2413" width="3572" height="2413" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" role="img" aria-label="Взаимодействие агентов и гейты">
+<style>:root{--c-bg:#ffffff;--c-fg:#16161a;--c-muted:#61616b;--c-edge:#b4b4ad;--c-line:#d8d8d2;--c-fill:#f7f7f4;}@media (prefers-color-scheme: dark){:root{--c-bg:#1a1a1d;--c-fg:#ececee;--c-muted:#9b9ba4;--c-edge:#55555e;--c-line:#3a3a41;--c-fill:#232327;}}.bg{fill:var(--c-bg);}.t{fill:var(--c-fg);font-size:11.5px;}.t.b{font-weight:700;}.ttl{fill:var(--c-fg);font-size:17px;font-weight:700;}.sub{fill:var(--c-muted);font-size:11px;}.e{fill:none;stroke:var(--c-edge);stroke-width:1.7;}.elab{fill:var(--c-muted);font-size:10px;font-weight:700;}.box{stroke-width:1.6;}.s1{stroke:#c0392b;fill:#f8e3e0;}.x1{fill:#c0392b;}.s2{stroke:#c2691d;fill:#fbeada;}.x2{fill:#c2691d;}.s3{stroke:#9a7d0a;fill:#fbf3d5;}.x3{fill:#9a7d0a;}.s4{stroke:#1f7a4d;fill:#e1f2e8;}.x4{fill:#1f7a4d;}.s5{stroke:#1f6f8b;fill:#e0eff5;}.x5{fill:#1f6f8b;}.s6{stroke:#6b4fb8;fill:#ece6fa;}.x6{fill:#6b4fb8;}.s0{stroke:var(--c-line);fill:var(--c-fill);}.x0{fill:var(--c-muted);}@media (prefers-color-scheme: dark){.s1{stroke:#e88b80;fill:#3a1f1c;}.x1{fill:#e88b80;}.s2{stroke:#e5a765;fill:#352417;}.x2{fill:#e5a765;}.s3{stroke:#d8be5c;fill:#302a14;}.x3{fill:#d8be5c;}.s4{stroke:#6ec89b;fill:#15291f;}.x4{fill:#6ec89b;}.s5{stroke:#6fb6cf;fill:#152a33;}.x5{fill:#6fb6cf;}.s6{stroke:#a692e0;fill:#241d38;}.x6{fill:#a692e0;}}</style>
+<rect x="-2836" y="-1012" width="3572" height="2413" class="bg"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--c-edge)"/></marker></defs>
+<text x="-2832" y="-982" class="ttl">Взаимодействие агентов и гейты</text>
+<text x="-2832" y="-964" class="sub">agent-interaction.canvas · 43 узла, 66 связей</text>
+<path class="e" marker-end="url(#a)" d="M-2140,0 C-2039,0 -2001,0 -1900,0"/>
+<path class="e" marker-end="url(#a)" d="M-1780,0 C-1630,0 -1350,0 -1200,0"/>
+<path class="e" marker-end="url(#a)" d="M-1050,0 C-900,0 -750,0 -600,0"/>
+<path class="e" marker-end="url(#a)" d="M-440,0 C-297,0 -243,0 -100,0"/>
+<path class="e" marker-end="url(#a)" d="M70,0 C209,0 261,0 400,0"/>
+<path class="e" marker-end="url(#a)" d="M-1840,30 C-1840,62 -1840,68 -1840,100"/>
+<path class="e" marker-end="url(#a)" d="M-1840,155 C-1840,194 -1840,208 -1840,247"/>
+<path class="e" marker-end="url(#a)" d="M-1840,302 C-1840,345 -1840,362 -1840,405"/>
+<path class="e" marker-end="url(#a)" d="M-1840,450 C-1840,600 -2220,530 -2220,680"/>
+<path class="e" marker-end="url(#a)" d="M-1840,450 C-1840,547 -1970,583 -1970,680"/>
+<path class="e" marker-end="url(#a)" d="M-1840,450 C-1840,547 -1735,583 -1735,680"/>
+<path class="e" marker-end="url(#a)" d="M-1840,450 C-1840,586 -1515,544 -1515,680"/>
+<path class="e" marker-end="url(#a)" d="M-2220,725 C-2220,875 -1850,810 -1850,960"/>
+<path class="e" marker-end="url(#a)" d="M-1970,735 C-1970,830 -1850,866 -1850,960"/>
+<path class="e" marker-end="url(#a)" d="M-1735,725 C-1735,824 -1850,861 -1850,960"/>
+<path class="e" marker-end="url(#a)" d="M-1515,725 C-1515,866 -1850,819 -1850,960"/>
+<path class="e" marker-end="url(#a)" d="M-1850,1005 C-1850,1062 -1850,1083 -1850,1140"/>
+<path class="e" marker-end="url(#a)" d="M-1850,1185 C-1850,1233 -1850,1252 -1850,1300"/>
+<path class="e" marker-end="url(#a)" d="M-520,30 C-520,68 -520,82 -520,120"/>
+<path class="e" marker-end="url(#a)" d="M-520,165 C-520,213 -520,232 -520,280"/>
+<path class="e" marker-end="url(#a)" d="M-520,325 C-520,398 -695,392 -695,465"/>
+<path class="e" marker-end="url(#a)" d="M-520,325 C-520,388 -370,402 -370,465"/>
+<path class="e" marker-end="url(#a)" d="M-695,520 C-695,594 -520,606 -520,680"/>
+<path class="e" marker-end="url(#a)" d="M-370,520 C-370,587 -520,613 -520,680"/>
+<path class="e" marker-end="url(#a)" d="M-520,735 C-520,775 -520,790 -520,830"/>
+<path class="e" marker-end="url(#a)" d="M-520,875 C-520,914 -520,928 -520,967"/>
+<rect x="-545" y="912" width="49" height="16" rx="8" class="bg"/><text x="-520" y="924" class="elab" text-anchor="middle">APPROVE</text>
+<path class="e" marker-end="url(#a)" d="M-620,852 C-750,852 -930,910 -930,1040"/>
+<rect x="-828" y="937" width="105" height="16" rx="8" class="bg"/><text x="-775" y="949" class="elab" text-anchor="middle">BUSINESS_CONFLICT</text>
+<path class="e" marker-end="url(#a)" d="M-1125,-30 C-1125,-74 -1125,-91 -1125,-135"/>
+<path class="e" marker-end="url(#a)" d="M-1125,-180 C-1125,-212 -1125,-223 -1125,-255"/>
+<path class="e" marker-end="url(#a)" d="M-1125,-300 C-1125,-407 -1380,-385 -1380,-492"/>
+<path class="e" marker-end="url(#a)" d="M-1125,-300 C-1125,-407 -870,-385 -870,-492"/>
+<path class="e" marker-end="url(#a)" d="M-1380,-547 C-1380,-654 -1125,-630 -1125,-737"/>
+<path class="e" marker-end="url(#a)" d="M-870,-547 C-870,-654 -1125,-630 -1125,-737"/>
+<path class="e" marker-end="url(#a)" d="M-1125,-782 C-1125,-822 -1125,-837 -1125,-877"/>
+<path class="e" marker-end="url(#a)" d="M-15,-30 C-15,-66 -15,-79 -15,-115"/>
+<path class="e" marker-end="url(#a)" d="M-15,-160 C-15,-198 -15,-212 -15,-250"/>
+<path class="e" marker-end="url(#a)" d="M-15,-295 C-15,-377 180,-365 180,-447"/>
+<path class="e" marker-end="url(#a)" d="M-15,-295 C-15,-379 -215,-358 -215,-442"/>
+<path class="e" marker-end="url(#a)" d="M180,-492 C180,-574 -15,-576 -15,-658"/>
+<path class="e" marker-end="url(#a)" d="M-215,-492 C-215,-576 -15,-574 -15,-658"/>
+<path class="e" marker-end="url(#a)" d="M-15,-703 C-15,-812 -275,-755 -275,-864"/>
+<path class="e" marker-end="url(#a)" d="M-15,-703 C-15,-804 225,-763 225,-864"/>
+<path class="e" marker-end="url(#a)" d="M-2220,725 C-2220,875 -2620,800 -2620,950"/>
+<path class="e" marker-end="url(#a)" d="M-1970,735 C-1970,885 -2620,800 -2620,950"/>
+<path class="e" marker-end="url(#a)" d="M-1735,725 C-1735,875 -2620,800 -2620,950"/>
+<path class="e" marker-end="url(#a)" d="M-1515,725 C-1515,875 -2620,800 -2620,950"/>
+<path class="e" marker-end="url(#a)" d="M-1980,274 C-2130,274 -2620,800 -2620,950"/>
+<path class="e" marker-end="url(#a)" d="M-1720,1162 C-1570,1162 -1125,180 -1125,30"/>
+<path class="e" marker-end="url(#a)" d="M-985,-900 C-835,-900 -520,-180 -520,-30"/>
+<path class="e" marker-end="url(#a)" d="M365,-892 C515,-892 540,-195 540,-45"/>
+<path class="e" marker-end="url(#a)" d="M-1380,-547 C-1380,-697 -1740,-582 -1740,-732"/>
+<path class="e" marker-end="url(#a)" d="M-870,-547 C-870,-697 -1740,-582 -1740,-732"/>
+<path class="e" marker-end="url(#a)" d="M-1245,-158 C-1395,-158 -1740,-582 -1740,-732"/>
+<path class="e" marker-end="url(#a)" d="M-695,520 C-695,670 -115,533 -115,683"/>
+<path class="e" marker-end="url(#a)" d="M-370,520 C-370,627 -115,576 -115,683"/>
+<path class="e" marker-end="url(#a)" d="M-780,-520 C-704,-520 -676,-680 -600,-680"/>
+<path class="e" marker-end="url(#a)" d="M-215,-492 C-215,-591 -450,-554 -450,-653"/>
+<path class="e" marker-end="url(#a)" d="M180,-492 C180,-642 -450,-503 -450,-653"/>
+<path class="e" marker-end="url(#a)" d="M-420,990 C-309,990 -266,990 -155,990"/>
+<path class="e" marker-end="url(#a)" d="M-410,708 C-353,708 -332,708 -275,708"/>
+<path class="e" marker-end="url(#a)" d="M-695,520 C-695,627 -950,573 -950,680"/>
+<path class="e" marker-end="url(#a)" d="M-370,520 C-370,670 -950,530 -950,680"/>
+<path class="e" marker-end="url(#a)" d="M-630,708 C-701,708 -729,708 -800,708"/>
+<path class="e" marker-end="url(#a)" d="M-620,142 C-770,142 -950,530 -950,680"/>
+<path class="e" marker-end="url(#a)" d="M-1100,708 C-1250,708 -870,-342 -870,-492"/>
+<path class="e" marker-end="url(#a)" d="M125,990 C275,990 -15,180 -15,30"/>
+<rect x="-2400" y="-45" width="260" height="90" rx="8" class="box s3"/>
+<text x="-2270" y="-11.5" class="t" text-anchor="middle">office-manager (init)</text>
+<text x="-2270" y="4.0" class="t" text-anchor="middle">Читает task-input.md</text>
+<text x="-2270" y="19.5" class="t" text-anchor="middle">Запускает business фазу</text>
+<rect x="-1900" y="-30" width="120" height="60" rx="8" class="box s3"/>
+<text x="-1840" y="4.0" class="t" text-anchor="middle">Бизнес</text>
+<rect x="-1200" y="-30" width="150" height="60" rx="8" class="box s5"/>
+<text x="-1125" y="4.0" class="t" text-anchor="middle">Системный</text>
+<rect x="-600" y="-30" width="160" height="60" rx="8" class="box s3"/>
+<text x="-520" y="4.0" class="t" text-anchor="middle">Разработка</text>
+<rect x="-100" y="-30" width="170" height="60" rx="8" class="box s6"/>
+<text x="-15" y="4.0" class="t" text-anchor="middle">Тестирование</text>
+<rect x="400" y="-45" width="280" height="90" rx="8" class="box s3"/>
+<text x="540" y="-11.5" class="t" text-anchor="middle">office-manager (finish)</text>
+<text x="540" y="4.0" class="t" text-anchor="middle">docs-writer → lifecycle: done</text>
+<text x="540" y="19.5" class="t" text-anchor="middle">chats/ → history/{task_id}/</text>
+<rect x="-1245" y="-180" width="240" height="45" rx="8" class="box s5"/>
+<text x="-1125" y="-153.5" class="t" text-anchor="middle">owner-plan → task-queue.json</text>
+<rect x="-1195" y="-300" width="140" height="45" rx="8" class="box s6"/>
+<text x="-1125" y="-273.5" class="t" text-anchor="middle">fanout</text>
+<rect x="-1980" y="100" width="280" height="55" rx="8" class="box s3"/>
+<text x="-1840" y="123.8" class="t" text-anchor="middle">pm-questions</text>
+<text x="-1840" y="139.3" class="t" text-anchor="middle">→ qna.json (pm уточняет у пользователя)</text>
+<rect x="-1980" y="247" width="280" height="55" rx="8" class="box s3"/>
+<text x="-1840" y="270.8" class="t" text-anchor="middle">pm-cross-brief</text>
+<text x="-1840" y="286.3" class="t" text-anchor="middle">→ cross-brief.md (общая база для всех)</text>
+<rect x="-1980" y="405" width="280" height="45" rx="8" class="box s6"/>
+<text x="-1840" y="431.5" class="t" text-anchor="middle">fanout (4 агента параллельно)</text>
+<rect x="-105" y="-160" width="180" height="45" rx="8" class="box s6"/>
+<text x="-15" y="-133.5" class="t" text-anchor="middle">qa-lead-plan</text>
+<rect x="-75" y="-295" width="120" height="45" rx="8" class="box s6"/>
+<text x="-15" y="-268.5" class="t" text-anchor="middle">fanout</text>
+<rect x="-620" y="120" width="200" height="45" rx="8" class="box s3"/>
+<text x="-520" y="146.5" class="t" text-anchor="middle">dev-lead-split</text>
+<rect x="-580" y="280" width="120" height="45" rx="8" class="box s6"/>
+<text x="-520" y="306.5" class="t" text-anchor="middle">fanout</text>
+<rect x="-960" y="-547" width="180" height="55" rx="8" class="box s5"/>
+<text x="-870" y="-523.2" class="t" text-anchor="middle">analyst×N</text>
+<text x="-870" y="-507.7" class="t" text-anchor="middle">(dispatch-loop)</text>
+<rect x="-1480" y="-547" width="200" height="55" rx="8" class="box s5"/>
+<text x="-1380" y="-523.2" class="t" text-anchor="middle">architect</text>
+<text x="-1380" y="-507.7" class="t" text-anchor="middle">→ tech-proposal.md</text>
+<rect x="-1245" y="-782" width="240" height="45" rx="8" class="box s6"/>
+<text x="-1125" y="-755.5" class="t" text-anchor="middle">AND-gate → owner-synthesize</text>
+<rect x="-1265" y="-922" width="280" height="45" rx="8" class="box s4"/>
+<text x="-1125" y="-895.5" class="t" text-anchor="middle">wait:approval → brief-systemic.md</text>
+<rect x="-300" y="-492" width="170" height="50" rx="8" class="box s6"/>
+<text x="-215" y="-463.0" class="t" text-anchor="middle">qa</text>
+<rect x="100" y="-492" width="160" height="45" rx="8" class="box s6"/>
+<text x="180" y="-465.5" class="t" text-anchor="middle">penetration</text>
+<rect x="-115" y="-703" width="200" height="45" rx="8" class="box s6"/>
+<text x="-15" y="-676.5" class="t" text-anchor="middle">qa-lead-synthesis</text>
+<rect x="-2060" y="680" width="180" height="55" rx="8" class="box s3"/>
+<text x="-1970" y="703.8" class="t" text-anchor="middle">market-analyst</text>
+<text x="-1970" y="719.3" class="t" text-anchor="middle">(best-effort)</text>
+<rect x="-1810" y="680" width="150" height="45" rx="8" class="box s3"/>
+<text x="-1735" y="706.5" class="t" text-anchor="middle">strategist</text>
+<rect x="-1960" y="960" width="220" height="45" rx="8" class="box s6"/>
+<text x="-1850" y="986.5" class="t" text-anchor="middle">AND-gate (все 4 = done)</text>
+<rect x="-1980" y="1140" width="260" height="45" rx="8" class="box s3"/>
+<text x="-1850" y="1166.5" class="t" text-anchor="middle">pm-synthesis → brief-business.md</text>
+<rect x="-1970" y="1300" width="240" height="45" rx="8" class="box s4"/>
+<text x="-1850" y="1326.5" class="t" text-anchor="middle">wait:approval → OK / NOT_OK</text>
+<rect x="-1590" y="680" width="150" height="45" rx="8" class="box s3"/>
+<text x="-1515" y="706.5" class="t" text-anchor="middle">financier</text>
+<rect x="-2310" y="680" width="180" height="45" rx="8" class="box s3"/>
+<text x="-2220" y="706.5" class="t" text-anchor="middle">product-analyst</text>
+<rect x="-800" y="465" width="210" height="55" rx="8" class="box s3"/>
+<text x="-695" y="488.8" class="t" text-anchor="middle">backend</text>
+<text x="-695" y="504.3" class="t" text-anchor="middle">+ manifest.json</text>
+<rect x="-460" y="465" width="180" height="55" rx="8" class="box s3"/>
+<text x="-370" y="488.8" class="t" text-anchor="middle">frontend</text>
+<text x="-370" y="504.3" class="t" text-anchor="middle">+ manifest.json</text>
+<rect x="-2780" y="950" width="320" height="55" rx="8" class="box s3"/>
+<text x="-2620" y="973.8" class="t" text-anchor="middle">experience.md</text>
+<text x="-2620" y="989.3" class="t" text-anchor="middle">append-only, per-agent, task_id + инсайты</text>
+<rect x="-435" y="-919" width="320" height="55" rx="8" class="box s1"/>
+<text x="-275" y="-895.2" class="t" text-anchor="middle">QA blocking findings</text>
+<text x="-275" y="-879.7" class="t" text-anchor="middle">→ dev-lead-split-findings → re-fanout</text>
+<rect x="85" y="-919" width="280" height="55" rx="8" class="box s4"/>
+<text x="225" y="-887.5" class="t" text-anchor="middle">wait:approval → brief-testing.md</text>
+<rect x="-1900" y="-782" width="320" height="50" rx="8" class="box s3"/>
+<text x="-1740" y="-760.7" class="t" text-anchor="middle">experience.md</text>
+<text x="-1740" y="-745.2" class="t" text-anchor="middle">append-only, per-agent, task_id + инсайты</text>
+<rect x="-600" y="-708" width="300" height="55" rx="8" class="box s3"/>
+<text x="-450" y="-684.2" class="t" text-anchor="middle">clarifications/{recipient}.md</text>
+<text x="-450" y="-668.7" class="t" text-anchor="middle">асинхронно, не блокирует агента</text>
+<rect x="-620" y="967" width="200" height="45" rx="8" class="box s3"/>
+<text x="-520" y="993.5" class="t" text-anchor="middle">dev-lead-finalize</text>
+<rect x="-155" y="967" width="280" height="45" rx="8" class="box s4"/>
+<text x="-15" y="993.5" class="t" text-anchor="middle">wait:approval → brief-development.md</text>
+<rect x="-630" y="680" width="220" height="55" rx="8" class="box s3"/>
+<text x="-520" y="703.8" class="t" text-anchor="middle">reviewers → review.json</text>
+<text x="-520" y="719.3" class="t" text-anchor="middle">{ verdict, findings }</text>
+<rect x="-620" y="830" width="200" height="45" rx="8" class="box s6"/>
+<text x="-520" y="856.5" class="t" text-anchor="middle">decision.review</text>
+<rect x="-275" y="683" width="320" height="50" rx="8" class="box s3"/>
+<text x="-115" y="704.3" class="t" text-anchor="middle">experience.md</text>
+<text x="-115" y="719.8" class="t" text-anchor="middle">append-only, per-agent, task_id + инсайты</text>
+<rect x="-1100" y="680" width="300" height="55" rx="8" class="box s3"/>
+<text x="-950" y="703.8" class="t" text-anchor="middle">clarifications/{recipient}.md</text>
+<text x="-950" y="719.3" class="t" text-anchor="middle">асинхронно, не блокирует агента</text>
+<rect x="-1080" y="1040" width="300" height="55" rx="8" class="box s1"/>
+<text x="-930" y="1063.8" class="t" text-anchor="middle">BUSINESS_CONFLICT</text>
+<text x="-930" y="1079.3" class="t" text-anchor="middle">→ pm.feedback-react → pm-synthesis</text>
+</svg>

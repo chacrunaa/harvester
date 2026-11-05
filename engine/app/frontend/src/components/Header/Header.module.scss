@@ -1,0 +1,83 @@
+@use '@/app/styles/variables' as *;
+
+.root {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  height: $size-header-h;
+  padding: 0 $space-header-x;
+  background: $color-brand-teal;
+  color: $header-text-active;
+
+  @media (max-width: $bp-phone-large) {
+    height: 48px;
+    padding: 0 12px;
+  }
+}
+
+.nav {
+  display: flex;
+  //align-items: stretch;
+  gap: 0;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 16px;
+  color: $header-text-inactive;
+  font-size: $font-button-medium;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-bottom: 2px solid transparent;
+  transition: color 120ms ease, border-color 120ms ease;
+
+  &:hover {
+    color: $header-text-hover;
+  }
+}
+
+.linkActive {
+  color: $header-text-active;
+  background: #385d3a;
+  //border-bottom-color: $header-text-active;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wsDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $text-muted;
+  flex-shrink: 0;
+}
+
+.wsDotConnecting {
+  background: $color-info;
+}
+
+.wsDotConnected {
+  background: $color-success;
+}
+
+.wsDotDisconnected {
+  background: $text-muted;
+}
+
+.wsDotError {
+  background: $color-error;
+}
+
+.settingsButton {
+  min-width: 0;
+  padding: 6px;
+  color: $header-text-active;
+}

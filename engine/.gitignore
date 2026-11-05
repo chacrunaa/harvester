@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+app/frontend/src-tauri/target/
+app/frontend/src-tauri/bin/
+
+# IDE
+.idea/
+.vscode/
+
+# AI tooling — локальные рабочие артефакты
+.codex
+.notes/
+.agentforge/
+
+# Claude Code hooks (local wiring)
+.claude/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment & secrets — plaintext никогда не коммитим
+infra/.env
+infra/.api-keys
+infra/.api-keys.decode
+app/backend/.env
+app/frontend/.env
+.env
+.env.*
+!infra/.env.example
+!app/backend/.env.example
+!app/frontend/.env.example
+!.env.example
+
+# Корневые зашифрованные файлы (старые пути) — теперь в infra/
+environments
+infra/secrets
+
+# TypeScript
+*.tsbuildinfo
+coverage/
+
+# Local data stores
+store/
+site/
+harvester.db
+harvester.db-shm
+harvester.db-wal
+.notes/history/legacy
+.notes/history/legacy/
+docs/canvas/.obsidian

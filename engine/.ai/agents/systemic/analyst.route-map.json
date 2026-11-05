@@ -1,0 +1,131 @@
+{
+  "agent": "systemic/analyst",
+  "inputs": [
+    {
+      "name": "current-task",
+      "path": ".ai/chats/systemic/analyst/current-task.md",
+      "required": true
+    },
+    {
+      "name": "experience",
+      "path": ".ai/chats/systemic/analyst/experience.md",
+      "required": false
+    },
+    {
+      "name": "arch-answers",
+      "path": ".ai/chats/systemic/analyst/arch-answers.md",
+      "required": false
+    },
+    {
+      "name": "clarification-dev-lead",
+      "path": ".ai/chats/systemic/analyst/clarifications/dev-lead.md",
+      "required": false
+    },
+    {
+      "name": "clarification-backend",
+      "path": ".ai/chats/systemic/analyst/clarifications/backend.md",
+      "required": false
+    },
+    {
+      "name": "clarification-frontend",
+      "path": ".ai/chats/systemic/analyst/clarifications/frontend.md",
+      "required": false
+    },
+    {
+      "name": "clarification-reviewers",
+      "path": ".ai/chats/systemic/analyst/clarifications/reviewers.md",
+      "required": false
+    },
+    {
+      "name": "clarification-qa-lead",
+      "path": ".ai/chats/systemic/analyst/clarifications/qa-lead.md",
+      "required": false
+    },
+    {
+      "name": "clarification-qa",
+      "path": ".ai/chats/systemic/analyst/clarifications/qa.md",
+      "required": false
+    },
+    {
+      "name": "clarification-penetration",
+      "path": ".ai/chats/systemic/analyst/clarifications/penetration.md",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "arch-questions",
+      "path": ".ai/chats/systemic/analyst/arch-questions.md"
+    },
+    {
+      "name": "spec",
+      "path": ".ai/chats/systemic/analyst/spec.md"
+    },
+    {
+      "name": "clarifications-response-dev-lead",
+      "path": ".ai/chats/systemic/analyst/clarifications-response/dev-lead.md"
+    },
+    {
+      "name": "clarifications-response-backend",
+      "path": ".ai/chats/systemic/analyst/clarifications-response/backend.md"
+    },
+    {
+      "name": "clarifications-response-frontend",
+      "path": ".ai/chats/systemic/analyst/clarifications-response/frontend.md"
+    },
+    {
+      "name": "clarifications-response-reviewers",
+      "path": ".ai/chats/systemic/analyst/clarifications-response/reviewers.md"
+    },
+    {
+      "name": "clarifications-response-qa-lead",
+      "path": ".ai/chats/systemic/analyst/clarifications-response/qa-lead.md"
+    },
+    {
+      "name": "clarifications-response-qa",
+      "path": ".ai/chats/systemic/analyst/clarifications-response/qa.md"
+    },
+    {
+      "name": "clarifications-response-penetration",
+      "path": ".ai/chats/systemic/analyst/clarifications-response/penetration.md"
+    }
+  ],
+  "routing": [
+    {
+      "from": ".ai/chats/systemic/analyst/arch-questions.md",
+      "to": ".ai/chats/systemic/architect/arch-questions.md"
+    },
+    {
+      "from": ".ai/chats/systemic/analyst/spec.md",
+      "to": ".ai/chats/systemic/owner/spec.md"
+    },
+    {
+      "from": ".ai/chats/systemic/analyst/clarifications-response/dev-lead.md",
+      "to": ".ai/chats/development/dev-lead/clarifications-response.md"
+    },
+    {
+      "from": ".ai/chats/systemic/analyst/clarifications-response/backend.md",
+      "to": ".ai/chats/development/backend/clarifications-response.md"
+    },
+    {
+      "from": ".ai/chats/systemic/analyst/clarifications-response/frontend.md",
+      "to": ".ai/chats/development/frontend/clarifications-response.md"
+    },
+    {
+      "from": ".ai/chats/systemic/analyst/clarifications-response/reviewers.md",
+      "to": ".ai/chats/development/reviewers/clarifications-response.md"
+    },
+    {
+      "from": ".ai/chats/systemic/analyst/clarifications-response/qa-lead.md",
+      "to": ".ai/chats/testing/qa-lead/clarifications-response.md"
+    },
+    {
+      "from": ".ai/chats/systemic/analyst/clarifications-response/qa.md",
+      "to": ".ai/chats/testing/qa/clarifications-response.md"
+    },
+    {
+      "from": ".ai/chats/systemic/analyst/clarifications-response/penetration.md",
+      "to": ".ai/chats/testing/penetration/clarifications-response.md"
+    }
+  ]
+}

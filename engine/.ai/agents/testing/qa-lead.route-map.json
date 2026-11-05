@@ -1,0 +1,61 @@
+{
+  "agent": "testing/qa-lead",
+  "inputs": [
+    {
+      "name": "brief-development",
+      "path": ".ai/chats/testing/brief-development.md",
+      "required": true
+    },
+    {
+      "name": "result-qa-report",
+      "path": ".ai/chats/testing/qa-lead/results/qa/report.md",
+      "required": false
+    },
+    {
+      "name": "result-qa-logs",
+      "path": ".ai/chats/testing/qa-lead/results/qa/logs.txt",
+      "required": false
+    },
+    {
+      "name": "result-penetration-report",
+      "path": ".ai/chats/testing/qa-lead/results/penetration/report.md",
+      "required": false
+    },
+    {
+      "name": "result-penetration-logs",
+      "path": ".ai/chats/testing/qa-lead/results/penetration/logs.txt",
+      "required": false
+    },
+    {
+      "name": "clarifications-response",
+      "path": ".ai/chats/testing/qa-lead/clarifications-response.md",
+      "required": false
+    },
+    {
+      "name": "qna-answers",
+      "path": ".ai/chats/testing/qa-lead/qna.json",
+      "required": false,
+      "condition": "has-answers"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "qna",
+      "path": ".ai/chats/testing/qa-lead/qna.json"
+    },
+    {
+      "name": "clarifications",
+      "path": ".ai/chats/testing/qa-lead/clarifications.md"
+    },
+    {
+      "name": "brief-testing",
+      "path": ".ai/chats/testing/brief-testing.md"
+    }
+  ],
+  "routing": [
+    {
+      "from": ".ai/chats/testing/qa-lead/clarifications.md",
+      "to": ".ai/chats/systemic/analyst/clarifications/qa-lead.md"
+    }
+  ]
+}

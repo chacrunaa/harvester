@@ -1,0 +1,23 @@
+{
+  "task_id": "",
+  "created_at": "",
+  "phase": "init",
+  "agents": {
+    "office-manager": "pending",
+    "product-manager":  "pending",
+    "product-analyst":  "pending",
+    "market-analyst":   "pending",
+    "strategist":       "pending",
+    "financier":        "pending",
+    "owner":            "pending",
+    "architect":        "pending",
+    "analyst":          "pending",
+    "dev-lead":         "pending",
+    "backend":          "pending",
+    "frontend":         "pending",
+    "reviewers":        "pending",
+    "qa-lead":          "pending",
+    "qa":               "pending",
+    "penetration":      "pending"
+  }
+}

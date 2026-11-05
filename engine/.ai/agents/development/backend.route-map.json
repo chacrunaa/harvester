@@ -1,0 +1,41 @@
+{
+  "agent": "development/backend",
+  "codeOutputDir": "app/backend-nest",
+  "inputs": [
+    {
+      "name": "brief-systemic",
+      "path": ".ai/chats/development/brief-systemic.md",
+      "required": true
+    },
+    {
+      "name": "experience",
+      "path": ".ai/chats/development/backend/experience.md",
+      "required": false
+    },
+    {
+      "name": "clarifications-response",
+      "path": ".ai/chats/development/backend/clarifications-response.md",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "clarifications",
+      "path": ".ai/chats/development/backend/clarifications.md"
+    },
+    {
+      "name": "report",
+      "path": ".ai/chats/development/backend/report.md"
+    }
+  ],
+  "routing": [
+    {
+      "from": ".ai/chats/development/backend/clarifications.md",
+      "to": ".ai/chats/systemic/analyst/clarifications/backend.md"
+    },
+    {
+      "from": ".ai/chats/development/backend/report.md",
+      "to": ".ai/chats/development/dev-lead/results/backend.md"
+    }
+  ]
+}

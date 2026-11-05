@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "stage": "review",
+  "role": "reviewer",
+  "rules": [
+    "Не принимать задачу без проверки всех артефактов предыдущих стадий.",
+    "Если проблема в реализации, возвращать задачу в backend со статусом needs_adjustment, чтобы developer chain прошёл заново.",
+    "Если проблема в архитектурном handoff, возвращать задачу в architecture со статусом needs_adjustment.",
+    "Если есть расхождение логики, scope или отсутствующая функциональность, возвращать задачу в analysis со статусом needs_adjustment.",
+    "Для frontend задач с acceptance про root route/page не принимать source review вместо test evidence: нужен targeted route/page test или явное documented exception.",
+    "В service layer отдельно проверять новые helper-файлы на bucket-имена вроде collect.go/helpers.go; если соседний pattern использует responsibility-oriented файл, возвращать в develop."
+  ],
+  "task_memory_index": []
+}

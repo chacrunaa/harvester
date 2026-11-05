@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "stage": "intake",
+  "role": "product-owner",
+  "updated_at": "2026-06-04T19:30:00+03:00",
+  "items": [
+    {
+      "task_id": "HARV-001",
+      "task_link": "../../../../../history/tasks/HARV-001/task.json",
+      "priority": 10
+    }
+  ]
+}

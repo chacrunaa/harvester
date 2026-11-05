@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "group": "review",
+  "rules": [
+    "Review group currently routes only to review."
+  ],
+  "task_memory_index": []
+}

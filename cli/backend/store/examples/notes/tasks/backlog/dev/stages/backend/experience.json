@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "stage": "backend",
+  "role": "backend-developer",
+  "rules": [
+    "Работать только по developer specification и architecture report.",
+    "Фиксировать проверки и изменённые backend-зоны в backend report.",
+    "Backend stage fixes backend contract first: API, DTO, services, repositories, migrations, docs and swagger.",
+    "If task has no backend work, create an explicit no_backend_changes report instead of skipping artifacts.",
+    "Перед завершением backend stage обязательно выполнять TODO-scan по изменённым и указанным пользователем файлам."
+  ],
+  "task_memory_index": []
+}

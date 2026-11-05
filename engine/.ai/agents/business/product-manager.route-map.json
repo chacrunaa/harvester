@@ -1,0 +1,65 @@
+{
+  "agent": "business/product-manager",
+  "inputs": [
+    {
+      "name": "start",
+      "path": ".ai/chats/office-manager/start.md",
+      "required": true
+    },
+    {
+      "name": "qna-answers",
+      "path": ".ai/chats/business/product-manager/qna.json",
+      "required": false,
+      "condition": "has-answers"
+    },
+    {
+      "name": "report-product-analyst",
+      "path": ".ai/chats/business/product-manager/reports/product-analyst.md",
+      "required": false
+    },
+    {
+      "name": "report-market-analyst",
+      "path": ".ai/chats/business/product-manager/reports/market-analyst.md",
+      "required": false
+    },
+    {
+      "name": "report-strategist",
+      "path": ".ai/chats/business/product-manager/reports/strategist.md",
+      "required": false
+    },
+    {
+      "name": "report-financier",
+      "path": ".ai/chats/business/product-manager/reports/financier.md",
+      "required": false
+    },
+    {
+      "name": "feedback",
+      "path": ".ai/chats/business/product-manager/feedback.md",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "qna",
+      "path": ".ai/chats/business/product-manager/qna.json"
+    },
+    {
+      "name": "cross-brief",
+      "path": ".ai/chats/business/cross-brief.md"
+    },
+    {
+      "name": "iterations",
+      "path": ".ai/chats/business/product-manager/iterations.md"
+    },
+    {
+      "name": "brief-business",
+      "path": ".ai/chats/business/brief-business.md"
+    }
+  ],
+  "routing": [
+    {
+      "from": ".ai/chats/business/brief-business.md",
+      "to": ".ai/chats/systemic/owner/brief-business.md"
+    }
+  ]
+}

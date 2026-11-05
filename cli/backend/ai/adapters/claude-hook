@@ -1,0 +1,180 @@
+#!/usr/bin/env bash
+# Claude Code UserPromptSubmit hook for the harvester pipeline.
+#
+# Activation keywords (whole prompt) enter a role and persist it in ~/.harv/role:
+#   harv-planning | harv-dev | harv-testing | harv-review
+#
+# While a role is active, explicit verbs drive intent (no guessing):
+#   harv-do <ID> ...    -> enter an existing task   (turn-mode=task)
+#   harv-new ...        -> create a task via owner-intake (planning only, mode=new)
+#   harv-ask ...        -> free-form answer OUTSIDE the pipeline (mode=ask, ungated)
+#   harv-exit/harv-done -> drop the role
+#
+# A role-active prompt with no verb and no harv-do is AMBIGUOUS: the model must
+# stop and ask the user which mode to use (it must not silently do work — that was
+# the bypass anomaly this hook exists to prevent).
+#
+# ~/.harv/turn-mode is rewritten every prompt and read by the PreToolUse gate
+# (ai/adapters/harv-gate). Other keywords (sync-doc etc.) fall through to
+# keyword-detector. Generic ai/ context (skill, role base) is loaded via CLAUDE.md.
+
+set -euo pipefail
+
+BACKEND="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+HARV_DIR="$HOME/.harv"
+ACTIVE_FILE="$HARV_DIR/active"
+ROLE_FILE="$HARV_DIR/role"
+MODE_FILE="$HARV_DIR/turn-mode"
+mkdir -p "$HARV_DIR"
+
+resolve_group_dir() {
+  case "$1" in
+    planning) echo "plan" ;;
+    dev)      echo "dev" ;;
+    testing)  echo "testing" ;;
+    review)   echo "review" ;;
+    *)        echo "" ;;
+  esac
+}
+
+set_mode() { printf '%s' "$1" > "$MODE_FILE"; }
+passthrough() { echo '{"continue":true}'; }
+
+emit_ctx() {
+  python3 -c "
+import sys, json
+print(json.dumps({'continue': True, 'hookSpecificOutput': {
+  'hookEventName': 'UserPromptSubmit',
+  'additionalContext': sys.stdin.read(),
+}}))" <<< "$1"
+}
+
+input="$(cat)"
+
+prompt="$(echo "$input" | python3 -c "
+import sys, json
+d = json.load(sys.stdin)
+print(d.get('prompt') or (d.get('message') or {}).get('content') or next((p['text'] for p in d.get('parts',[]) if p.get('type')=='text'), ''))
+" 2>/dev/null || echo "")"
+
+trimmed="$(echo "$prompt" | tr '[:upper:]' '[:lower:]' | xargs)"
+first="$(printf '%s' "$trimmed" | awk '{print $1}')"
+
+project_label="$(cat "$ACTIVE_FILE" 2>/dev/null | tr -d '[:space:]')"
+notes_dir=""
+[ -n "$project_label" ] && notes_dir="$BACKEND/projects/$project_label/.notes"
+
+# --- 1. Activation keywords (whole prompt) -----------------------------------
+group=""
+case "$trimmed" in
+  harv-planning) group="planning" ;;
+  harv-dev)      group="dev" ;;
+  harv-testing)  group="testing" ;;
+  harv-review)   group="review" ;;
+esac
+if [ -n "$group" ]; then
+  group_dir="$(resolve_group_dir "$group")"
+  set_mode role
+  [ -z "$notes_dir" ] && { passthrough; exit 0; }
+  printf '%s' "$group_dir" > "$ROLE_FILE"
+  instructions="$notes_dir/tasks/backlog/$group_dir/instructions.md"
+  [ -f "$instructions" ] || { passthrough; exit 0; }
+  if [ "$group_dir" = "plan" ]; then
+    role_cmds="harv-new <текст> | harv-do <ID> | harv-ask <текст> | harv-exit"
+  else
+    role_cmds="harv-do <ID> | harv-exit"
+  fi
+  emit_ctx "[HARV ROLE: $group_dir | PROJECT: $project_label]
+[NOTES ROOT: $notes_dir]
+[CLI: $BACKEND/dist/harv]
+Роль активна. Команды: $role_cmds.
+Покажи их пользователю и дождись явной команды.
+
+$(cat "$instructions")"
+  exit 0
+fi
+
+# --- 2. Drop role ------------------------------------------------------------
+if [ "$first" = "harv-exit" ] || [ "$first" = "harv-done" ]; then
+  rm -f "$ROLE_FILE"
+  set_mode ask
+  emit_ctx "[HARV] Роль сброшена. Pipeline-режим выключен — обычные ответы."
+  exit 0
+fi
+
+active_role="$(cat "$ROLE_FILE" 2>/dev/null | tr -d '[:space:]')"
+
+# --- 3. Verbs (require an active role) ---------------------------------------
+if [ -n "$active_role" ] && [ -n "$notes_dir" ]; then
+  rest="$(echo "$prompt" | sed -E 's/^[[:space:]]*[Hh][Aa][Rr][Vv]-[A-Za-z]+[[:space:]]*//')"
+
+  case "$first" in
+    harv-ask)
+      if [ "$active_role" != "plan" ]; then
+        set_mode ambiguous
+        emit_ctx "[HARV] harv-ask доступен только в роли plan. Текущая роль: $active_role. Используй harv-do <ID> для работы с задачей."
+        exit 0
+      fi
+      set_mode ask
+      emit_ctx "[HARV MODE: ASK | ROLE: $active_role]
+Свободный ответ ВНЕ pipeline санкционирован. НЕ трогай .notes / runtime задачи, не заводи задачу, не бери lease — просто ответь.
+
+Запрос: $rest"
+      exit 0 ;;
+
+    harv-new)
+      if [ "$active_role" != "plan" ]; then
+        set_mode ambiguous
+        emit_ctx "[HARV] harv-new доступен только в роли plan. Текущая роль: $active_role."
+        exit 0
+      fi
+      set_mode new
+      owner="$notes_dir/tasks/backlog/plan/stages/intake/instructions.md"
+      [ -f "$owner" ] || { passthrough; exit 0; }
+      emit_ctx "[HARV MODE: NEW TASK | ROLE: $active_role | PROJECT: $project_label]
+[NOTES ROOT: $notes_dir]
+[CLI: $BACKEND/dist/harv]
+Заведи новую задачу через owner-intake по инструкции ниже. Артефакты и runtime — только в .notes. Источник задачи:
+$rest
+
+--- owner instructions ---
+$(cat "$owner")"
+      exit 0 ;;
+
+    harv-do)
+      task_id="$(printf '%s' "$rest" | awk '{print $1}')"
+      if [ -z "$task_id" ]; then
+        set_mode ambiguous
+        emit_ctx "[HARV] harv-do требует TASK_ID: harv-do <ID> [уточнение]."
+        exit 0
+      fi
+      set_mode task
+      instr="$notes_dir/tasks/backlog/$active_role/instructions.md"
+      emit_ctx "[HARV MODE: TASK $task_id | ROLE: $active_role | PROJECT: $project_label]
+[NOTES ROOT: $notes_dir]
+[CLI: $BACKEND/dist/harv]
+Войди в задачу $task_id по протоколу входа: tasks.json -> stages.json -> history/tasks/$task_id/task.json; проверь current_stage/status/queue/lease. Артефакты только в .notes/history/**; смену состояния делай через harv.
+$( [ -f "$instr" ] && cat "$instr" )"
+      exit 0 ;;
+  esac
+
+  # Role active, no recognized verb, no harv-do -> ambiguous: stop and ask.
+  set_mode ambiguous
+  if [ "$active_role" = "plan" ]; then
+    available_cmds="  • harv-new <текст>  — завести задачу (owner-intake);
+  • harv-do <ID>      — войти в существующую задачу;
+  • harv-ask <текст>  — обычный ответ вне pipeline."
+  else
+    available_cmds="  • harv-do <ID>      — войти в существующую задачу."
+  fi
+  emit_ctx "[HARV MODE: AMBIGUOUS | ROLE: $active_role]
+Ты в роли $active_role, но промпт без явной команды и без harv-do <ID>.
+НЕ выполняй работу и НЕ пиши файлы. Остановись и спроси пользователя, что делать:
+$available_cmds
+Запрос пользователя: $prompt"
+  exit 0
+fi
+
+# --- 4. No active role -> normal keyword routing -----------------------------
+set_mode ask
+exec go run "$BACKEND/.claude/scripts/keyword-detector.go" <<< "$input"

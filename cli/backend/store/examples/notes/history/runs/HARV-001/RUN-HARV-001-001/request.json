@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "run_id": "RUN-HARV-001-001",
+  "task_id": "HARV-001",
+  "stage_id": "analysis",
+  "group": "plan",
+  "role": "analyst",
+  "owner": "planning-console",
+  "target_root": "/private/var/folders/82/jm3x8r3d0cq0gjcv14tttnmh0000gn/T/tmp.zsTh0xK1wF",
+  "notes_root": "/private/var/folders/82/jm3x8r3d0cq0gjcv14tttnmh0000gn/T/tmp.zsTh0xK1wF/.notes",
+  "inputs": [
+    "tasks.json",
+    "history/tasks/HARV-001/task.json",
+    "history/tasks/HARV-001/source.txt",
+    "plan/stages/analysis/experience.json"
+  ],
+  "expected_outputs": [
+    "history/briefs/analyst/HARV-001.analysis-brief.md",
+    "history/specifications/HARV-001.developer-spec.md",
+    "history/memory/analyst/HARV-001.md"
+  ],
+  "timeout_seconds": 30,
+  "provider": "command"
+}

@@ -1,0 +1,26 @@
+# Скопировать в terraform.tfvars (файл в .gitignore — секреты не коммитить):
+#   cp terraform.tfvars.example terraform.tfvars
+
+# OAuth токен Yandex Cloud:
+# Получить: yc iam create-token
+yc_token = "your-yandex-oauth-token"
+
+# Cloud ID и Folder ID:
+# Получить: yc config list
+yc_cloud_id  = "your-cloud-id"
+yc_folder_id = "your-folder-id"
+
+# Публичный SSH ключ:
+# Получить: cat ~/.ssh/id_ed25519.pub
+# Если ключа нет: ssh-keygen -t ed25519 -C "harvester-yandex"
+ssh_public_key = "ssh-ed25519 AAAA... your-public-key"
+
+# Опционально — для тестов можно включить прерываемую VM (дешевле ~3x):
+# preemptible = true
+
+# Опционально — для экономии на тестах (burstable vCPU):
+# api_core_fraction = 20
+
+# Проверить актуальный ID образа Ubuntu 22.04:
+#   yc compute image list --folder-id standard-images | grep ubuntu-22
+# ubuntu_image_id = "fd8clogg1kull9084s9o"

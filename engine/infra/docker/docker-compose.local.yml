@@ -1,0 +1,31 @@
+# Локальная сборка и запуск в Docker — для проверки образа перед деплоем.
+#
+#   cp infra/.env.example infra/.env
+#   docker compose -f infra/docker/docker-compose.local.yml up --build
+#
+# Сервис один: watcher конвейера — это Go-библиотека (.ai/scripts),
+# которую бэкенд поднимает внутри своего процесса (internal/service/
+# watcher.go), отдельным контейнером он не бывает.
+#
+# Для разработки Docker не нужен, запускай нативно:
+#   make dev          # API :3100 + Vite :5173
+
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile
+    env_file: ../../infra/.env
+    ports:
+      - "3100:3100"
+    volumes:
+      - pipeline_data:/app/pipeline
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3100/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  pipeline_data:

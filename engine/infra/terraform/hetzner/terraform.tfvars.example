@@ -1,0 +1,17 @@
+# Скопировать в terraform.tfvars (файл в .gitignore — секреты не коммитить):
+#   cp terraform.tfvars.example terraform.tfvars
+
+# API токен Hetzner:
+# Hetzner Console → Project → Security → API Tokens → Generate API Token (Read & Write)
+hcloud_token = "your-hetzner-api-token-here"
+
+# Публичный SSH ключ:
+# Получить: cat ~/.ssh/id_ed25519.pub
+# Если ключа нет: ssh-keygen -t ed25519 -C "harvester-hetzner"
+ssh_public_key = "ssh-ed25519 AAAA... your-public-key"
+
+# Опционально — дефолт Helsinki
+# location = "hel1"
+
+# Опционально — дефолт cx22 для Phase 1, cpx21 для Phase 2
+# server_type_api = "cx22"

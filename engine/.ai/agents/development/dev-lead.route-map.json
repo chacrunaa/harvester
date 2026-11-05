@@ -1,0 +1,60 @@
+{
+  "agent": "development/dev-lead",
+  "inputs": [
+    {
+      "name": "brief-systemic",
+      "path": ".ai/chats/development/brief-systemic.md",
+      "required": true
+    },
+    {
+      "name": "result-backend",
+      "path": ".ai/chats/development/dev-lead/results/backend.md",
+      "required": false
+    },
+    {
+      "name": "result-frontend",
+      "path": ".ai/chats/development/dev-lead/results/frontend.md",
+      "required": false
+    },
+    {
+      "name": "review",
+      "path": ".ai/chats/development/dev-lead/review.md",
+      "required": false
+    },
+    {
+      "name": "clarifications-response",
+      "path": ".ai/chats/development/dev-lead/clarifications-response.md",
+      "required": false
+    },
+    {
+      "name": "qna-answers",
+      "path": ".ai/chats/development/dev-lead/qna.json",
+      "required": false,
+      "condition": "has-answers"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "qna",
+      "path": ".ai/chats/development/dev-lead/qna.json"
+    },
+    {
+      "name": "clarifications",
+      "path": ".ai/chats/development/dev-lead/clarifications.md"
+    },
+    {
+      "name": "brief-development",
+      "path": ".ai/chats/development/brief-development.md"
+    }
+  ],
+  "routing": [
+    {
+      "from": ".ai/chats/development/dev-lead/clarifications.md",
+      "to": ".ai/chats/systemic/analyst/clarifications/dev-lead.md"
+    },
+    {
+      "from": ".ai/chats/development/brief-development.md",
+      "to": ".ai/chats/testing/brief-development.md"
+    }
+  ]
+}

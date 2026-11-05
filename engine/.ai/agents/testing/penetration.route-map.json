@@ -1,0 +1,48 @@
+{
+  "agent": "testing/penetration",
+  "inputs": [
+    {
+      "name": "brief-development",
+      "path": ".ai/chats/testing/brief-development.md",
+      "required": true
+    },
+    {
+      "name": "experience",
+      "path": ".ai/chats/testing/penetration/experience.md",
+      "required": false
+    },
+    {
+      "name": "clarifications-response",
+      "path": ".ai/chats/testing/penetration/clarifications-response.md",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "clarifications",
+      "path": ".ai/chats/testing/penetration/clarifications.md"
+    },
+    {
+      "name": "report",
+      "path": ".ai/chats/testing/penetration/report.md"
+    },
+    {
+      "name": "logs",
+      "path": ".ai/chats/testing/penetration/logs.txt"
+    }
+  ],
+  "routing": [
+    {
+      "from": ".ai/chats/testing/penetration/clarifications.md",
+      "to": ".ai/chats/systemic/analyst/clarifications/penetration.md"
+    },
+    {
+      "from": ".ai/chats/testing/penetration/report.md",
+      "to": ".ai/chats/testing/qa-lead/results/penetration/report.md"
+    },
+    {
+      "from": ".ai/chats/testing/penetration/logs.txt",
+      "to": ".ai/chats/testing/qa-lead/results/penetration/logs.txt"
+    }
+  ]
+}

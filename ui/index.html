@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Harvester</title>
+<meta name="description" content="Многоагентный конвейер разработки продукта: движок на Go с веб-интерфейсом на React и вторая версия в виде CLI.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='14'>&#9730;</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+
+  <h1>Harvester</h1>
+  <p class="lead">
+    Конвейер, который проводит продуктовую задачу через фазы — бизнес-анализ,
+    системное проектирование, разработку и тестирование. Каждую фазу ведёт
+    агент-оркестратор, часть работы идёт параллельно, между фазами стоят гейты.
+    Две версии продукта: движок-сервер и переосмысление того же в виде CLI.
+  </p>
+
+  <div class="grid">
+    <a class="card" href="engine.html">
+      <span class="title"><b>Движок конвейера</b> <span class="tag">v1</span></span>
+      <p>
+        Go-сервис: watcher состояния на fsnotify, порядок фаз, AND-гейты,
+        REST и WebSocket. Веб-интерфейс на React и TypeScript.
+      </p>
+      <span class="stack">
+        <span class="chip primary">Go 1.22</span>
+        <span class="chip">Gin</span>
+        <span class="chip">WebSocket</span>
+        <span class="chip">fsnotify</span>
+        <span class="chip primary">React 18</span>
+        <span class="chip">TypeScript</span>
+        <span class="chip">Vite</span>
+        <span class="chip">Docker</span>
+      </span>
+    </a>
+
+    <a class="card" href="cli.html">
+      <span class="title"><b>CLI harv</b> <span class="tag">v2</span></span>
+      <p>
+        Та же идея без сервера: состояние задачи лежит в файлах проекта,
+        роли исполняют агенты в чатах, а CLI держит очереди, ревизии и гейты.
+      </p>
+      <span class="stack">
+        <span class="chip primary">Python 3.11</span>
+        <span class="chip">без зависимостей</span>
+        <span class="chip">24 команды</span>
+        <span class="chip">65 тестов</span>
+      </span>
+    </a>
+  </div>
+
+  <h2>Почему версий две</h2>
+  <p>
+    Первая версия — полноценный сервис: он сам вызывает модель, следит за
+    файлами и показывает прогресс в браузере. Это работает, но требует
+    поднятого сервера, ключей и собственного интерфейса под каждый шаг.
+  </p>
+  <p>
+    Вторая версия убирает сервер. Агенты и так живут в редакторе с чатом, а
+    значит нужен не ещё один интерфейс, а <em>дисциплина</em>: кто имеет право
+    трогать задачу, какие артефакты обязаны появиться перед передачей дальше,
+    что делать при конфликте. Поэтому v2 — это CLI и машина состояний в
+    файлах, которую одинаково видят человек и агент.
+  </p>
+
+  <h2>Что можно посмотреть</h2>
+  <table>
+    <tr><th>Страница</th><th>Что там</th></tr>
+    <tr>
+      <td><a href="engine.html">Движок</a></td>
+      <td>Проигрыватель настоящего прогона: фазы, параллельные агенты, срабатывание AND-гейта. Архитектура, маршруты API, скриншот интерфейса.</td>
+    </tr>
+    <tr>
+      <td><a href="cli.html">CLI</a></td>
+      <td>Записанный прогон задачи: как гейт отклоняет передачу без артефактов и как ломается попытка записи поверх чужой ревизии.</td>
+    </tr>
+  </table>
+
+  <h2>Запуск</h2>
+  <pre><code>cd engine &amp;&amp; make install &amp;&amp; make dev   # API :3100, интерфейс :5173
+cd cli/backend &amp;&amp; make test            # 65 тестов, ключи не нужны</code></pre>
+  <p class="small muted">
+    Витрина — статические файлы: открывается двойным кликом по
+    <code>ui/index.html</code>, сборка и сервер не нужны.
+  </p>
+
+  <footer>
+    Пет-проект. Данные в проигрывателях записаны автоматическими прогонами
+    настоящего кода, а не нарисованы вручную.
+  </footer>
+
+</main>
+</body>
+</html>

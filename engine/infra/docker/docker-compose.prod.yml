@@ -1,0 +1,37 @@
+# Production docker-compose — Go API за реверс-прокси Caddy.
+#
+# Образ собирается и публикуется вручную (CI в этом репозитории нет):
+#   docker build -f infra/docker/Dockerfile -t <registry>/harvester/api:latest .
+#   docker push <registry>/harvester/api:latest
+#
+# Установка на сервере:
+#   scp infra/docker/docker-compose.prod.yml deploy@<IP>:/opt/harvester/docker-compose.yml
+#   scp infra/.env deploy@<IP>:/opt/harvester/.env
+#   ssh deploy@<IP> "cd /opt/harvester && docker compose up -d"
+#
+# Порт слушается только на localhost: наружу трафик отдаёт Caddy
+# (infra/server/Caddyfile), он же терминирует TLS.
+
+services:
+  api:
+    image: ${HARVESTER_IMAGE:-harvester/api:latest}
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "127.0.0.1:3100:3100"
+    volumes:
+      - pipeline_data:/app/pipeline
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3100/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+volumes:
+  pipeline_data:

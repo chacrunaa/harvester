@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "stage": "analysis",
+  "role": "analyst",
+  "rules": [
+    "Не переводить задачу в разработку без analyst brief и developer specification.",
+    "Если вопрос влияет на scope или acceptance criteria, фиксировать его в history/tasks/<TASK_ID>/task.json -> questions."
+  ],
+  "task_memory_index": []
+}

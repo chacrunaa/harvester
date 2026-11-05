@@ -1,0 +1,71 @@
+@use '@/app/styles/variables' as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
+  background: #f5f6f8;
+}
+
+.back {
+  align-self: flex-start;
+  margin: 16px 24px 0;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.72);
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 16px;
+
+  @media (max-width: $bp-phone-large) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+}
+
+.navLink {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: rgba(0, 0, 0, 0.72);
+  font-size: 14px;
+  text-decoration: none;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+}
+
+.navLinkActive {
+  color: #1565c0;
+  background-color: rgba(21, 101, 192, 0.08);
+}
+
+.main {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+}

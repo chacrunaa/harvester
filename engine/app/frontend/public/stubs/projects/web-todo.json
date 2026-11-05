@@ -1,0 +1,60 @@
+{
+  "projectId": "web-todo",
+  "isInitialized": true,
+  "currentTaskId": "TF-001",
+  "taskNumber": 1,
+  "enabledChats": ["analytics", "systemic"],
+  "messages": {
+    "analytics": [
+      {
+        "id": "m-an-1",
+        "chatId": "analytics",
+        "type": "system",
+        "content": "Группа «Аналитика» активирована для проекта TaskFlow.",
+        "createdAt": "2026-05-12T10:00:00.000Z"
+      },
+      {
+        "id": "m-an-2",
+        "chatId": "analytics",
+        "type": "user",
+        "content": "Проект: TaskFlow. Личное веб-приложение для управления задачами.",
+        "createdAt": "2026-05-12T10:01:00.000Z"
+      },
+      {
+        "id": "m-an-3",
+        "chatId": "analytics",
+        "type": "agent-card",
+        "content": {
+          "agentId": "business/product-manager",
+          "agentTitle": "Product Manager",
+          "summary": "Сформировал первичное понимание задачи. Нужны уточнения по статусам."
+        },
+        "createdAt": "2026-05-12T10:02:00.000Z"
+      },
+      {
+        "id": "m-an-4",
+        "chatId": "analytics",
+        "type": "qna-form",
+        "content": {
+          "agentId": "business/product-analyst",
+          "questions": [
+            { "id": "q1", "text": "Сколько статусов задач достаточно?", "answer": null },
+            { "id": "q2", "text": "Нужны ли дедлайны в MVP?", "answer": null }
+          ]
+        },
+        "createdAt": "2026-05-12T10:03:00.000Z"
+      }
+    ],
+    "systemic": [
+      {
+        "id": "m-sy-1",
+        "chatId": "systemic",
+        "type": "system",
+        "content": "Группа «Системная аналитика» ожидает brief-business.md.",
+        "createdAt": "2026-05-12T10:10:00.000Z"
+      }
+    ],
+    "development": [],
+    "testing": []
+  }
+}

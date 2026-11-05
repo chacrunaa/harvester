@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CLI harv — Harvester</title>
+<meta name="description" content="Вторая версия Harvester: CLI harv на Python без зависимостей, машина состояний в файлах проекта, гейты и оптимистичная блокировка.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='14'>&#9730;</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+
+  <div class="topbar">
+    <a class="back" href="index.html">← Harvester</a>
+    <span class="tag">v2 · cli/</span>
+  </div>
+
+  <h1>CLI <code>harv</code></h1>
+  <p class="lead">
+    Вторая версия обходится без сервера и без собственного интерфейса.
+    Состояние задачи лежит в каталоге <code>.notes/</code> внутри проекта,
+    роли исполняют агенты в обычных чатах редактора, а CLI отвечает за
+    дисциплину: кто имеет право взять задачу, что обязано появиться перед
+    передачей дальше и что делать при конфликте.
+  </p>
+  <p class="lead">
+    Python 3.11 и <strong>только стандартная библиотека</strong> —
+    ни одной сторонней зависимости. 24 команды, 65 тестов.
+  </p>
+
+  <h2>Записанный прогон</h2>
+  <p>
+    Ниже — настоящий прогон, записанный скриптом <code>tools/trace-cli.py</code>
+    во временном каталоге с подменённым <code>HOME</code>. Ключи LLM не
+    нужны: <code>harv</code> не ходит в сеть, это машина состояний над
+    файлами. Два шага помечены крестиком — это не поломка, а
+    <strong>сработавшие проверки</strong>, ради которых всё и затевалось.
+  </p>
+
+  <div class="player">
+    <div class="player-head">
+      <strong>Задача HARV-004 — «Добавить экспорт отчётов в CSV»</strong>
+      <div class="src">Источник: <code>ui/data/cli-run.js</code></div>
+    </div>
+    <div class="controls">
+      <button id="expand-all" type="button">Развернуть всё</button>
+      <span class="counter">13 шагов</span>
+    </div>
+    <div class="steps" id="steps"></div>
+  </div>
+
+  <h3>Два интересных места</h3>
+  <table>
+    <tr><th>Шаг</th><th>Что проверяет</th></tr>
+    <tr>
+      <td><code>advance … --to architecture</code></td>
+      <td>
+        Стадия <code>analysis</code> обязана оставить три артефакта. Их нет —
+        передача отклонена с перечислением недостающих файлов. Мало создать
+        файл: его нужно ещё зарегистрировать через <code>add-artifact</code>,
+        иначе гейт сообщит <code>artifact_not_registered</code>.
+      </td>
+    </tr>
+    <tr>
+      <td><code>advance … --expect-revision 999</code></td>
+      <td>
+        Оптимистичная блокировка. Агент заявляет, какую ревизию он видел;
+        если за это время задачу изменил другой чат, команда отказывает
+        с <code>stale_revision</code> вместо того, чтобы затереть чужую работу.
+      </td>
+    </tr>
+  </table>
+
+  <h2>Модель работы</h2>
+  <p>
+    Восемь стадий, собранных в четыре группы — по группе на чат. Правило
+    одного писателя: чат берёт только те задачи, у которых
+    <code>current_stage</code> совпадает с его стадией. Поэтому четыре чата
+    можно держать открытыми одновременно — они физически не могут взять
+    одну задачу.
+  </p>
+
+  <table>
+    <tr><th>Группа</th><th>Стадии</th><th>Слово активации</th></tr>
+    <tr><td>plan</td><td><code>intake</code> → <code>analysis</code> → <code>architecture</code></td><td><code>harv-planning</code></td></tr>
+    <tr><td>dev</td><td><code>backend</code>, <code>frontend</code>, <code>integration</code></td><td><code>harv-dev</code></td></tr>
+    <tr><td>testing</td><td><code>test</code></td><td><code>harv-testing</code></td></tr>
+    <tr><td>review</td><td><code>review</code></td><td><code>harv-review</code></td></tr>
+  </table>
+
+  <p>
+    Ключевое слово перехватывает хук <code>UserPromptSubmit</code>
+    (<code>ai/adapters/claude-hook</code>) и подкладывает в контекст
+    инструкции роли — агенту не нужно объяснять правила вручную.
+  </p>
+
+  <h3>Протокол записи</h3>
+  <pre><code>перед записью   перечитать task.json
+                сверить runtime.revision, current_stage и lease (TTL 120 мин)
+после записи    увеличить revision
+                добавить событие в events
+                перенести task_id между queue.json стадий</code></pre>
+  <p class="small muted">
+    Контракт лежит рядом с данными:
+    <code>.notes/tasks/backlog/stages.json</code>.
+  </p>
+
+  <h2>Команды</h2>
+  <p>24 команды, у каждой есть <code>--json</code> для машиночитаемого вывода.</p>
+  <table>
+    <tr><th>Группа</th><th>Команды</th></tr>
+    <tr><td>проекты</td><td><code>init</code>, <code>use</code></td></tr>
+    <tr><td>задачи</td><td><code>create</code>, <code>status</code>, <code>list</code>, <code>queues</code>, <code>artifacts</code>, <code>events</code></td></tr>
+    <tr><td>продвижение</td><td><code>take</code>, <code>move</code>, <code>advance</code>, <code>release</code>, <code>add-artifact</code>, <code>retry</code></td></tr>
+    <tr><td>параллельность</td><td><code>fanout</code> — ветки группы dev с барьером на соединении</td></tr>
+    <tr><td>диалог</td><td><code>questions</code>, <code>incidents</code></td></tr>
+    <tr><td>целостность</td><td><code>validate</code>, <code>repair</code>, <code>sync-index</code></td></tr>
+    <tr><td>сводки</td><td><code>planning</code>, <code>dev</code>, <code>testing</code>, <code>review</code>, <code>run</code></td></tr>
+  </table>
+
+  <h2>Запуск</h2>
+  <pre><code>cd cli/backend
+make install                                # обёртка dist/harv
+ln -sf "$PWD/dist/harv" ~/.local/bin/harv
+
+harv init /path/to/project --personal
+harv create "Описание задачи"
+harv status HARV-004
+
+make test                                   # 65 тестов</code></pre>
+  <p class="small muted">
+    Без установки CLI запускается напрямую: <code>app/src/main --help</code>.
+    На свежей копии <code>make projects</code> честно скажет, что проектов
+    нет, — пока не выполнен <code>harv init</code>.
+  </p>
+
+  <h2>Ограничения</h2>
+  <div class="note warn">
+    <p><strong><code>fanout</code> не доводит ветки до конца без провайдера.</strong>
+    Группу ветвей и барьер он создаёт, но исполнять ветки должен
+    sub-agent — для этого нужен настроенный провайдер модели. В записи
+    выше барьер честно отказывает.</p>
+    <p><strong><code>make chat</code> не открывает чат.</strong>
+    Он печатает готовый промпт и команду для вставки.</p>
+    <p><strong><code>templates/</code> — пока заготовка</strong> под будущие
+    <code>template init</code> и <code>template update</code>.</p>
+    <p><strong>Тестов фронтенда нет</strong>, потому что нет и фронтенда:
+    вся работа идёт из терминала и чатов.</p>
+  </div>
+
+  <footer>
+    Код: <code>cli/</code>. Подробности — <code>cli/backend/README.md</code>,
+    контракт стадий —
+    <code>cli/backend/store/examples/notes/tasks/backlog/stages.json</code>.
+  </footer>
+
+</main>
+<script src="data/cli-run.js"></script>
+<script src="steps.js"></script>
+</body>
+</html>

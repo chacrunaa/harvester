@@ -1,0 +1,31 @@
+# Caddyfile — Phase 1
+# Скопировать на сервер:
+#   scp infra/server/Caddyfile deploy@<IP>:/etc/caddy/Caddyfile
+# Применить:
+#   ssh deploy@<IP> "sudo caddy reload --config /etc/caddy/Caddyfile"
+#
+# Заменить app.harvester.example.com на свой домен!
+
+app.harvester.example.com {
+    reverse_proxy localhost:3100 {
+        health_uri      /health
+        health_interval 30s
+        health_timeout  5s
+    }
+
+    log {
+        output file /var/log/caddy/access.log {
+            roll_size 50mb
+            roll_keep 5
+        }
+        format json
+    }
+
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Frame-Options "SAMEORIGIN"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        -Server
+    }
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "task_id": "HARV-001",
+  "topic": "Добавить источник данных внешнего API",
+  "source": {
+    "path": "source.txt",
+    "source_id_mismatch": false
+  },
+  "backlog": {
+    "index_link": "../../../tasks/backlog/tasks.json",
+    "stages_link": "../../../tasks/backlog/stages.json",
+    "queue_link": "../../../tasks/backlog/plan/stages/intake/queue.json"
+  },
+  "runtime": {
+    "current_stage": "intake",
+    "status": "new",
+    "revision": 1,
+    "lease": null,
+    "updated_at": "2026-06-04T19:30:00+03:00"
+  },
+  "artifacts": {
+    "briefs": [],
+    "specifications": [],
+    "reports": [],
+    "memory": [],
+    "chats": [],
+    "questions": []
+  },
+  "questions": [],
+  "events": [
+    {
+      "at": "2026-06-04T19:30:00+03:00",
+      "type": "task_created",
+      "stage": "intake",
+      "status": "new",
+      "actor": "demo-seed"
+    }
+  ]
+}

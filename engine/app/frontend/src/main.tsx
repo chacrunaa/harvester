@@ -1,0 +1,20 @@
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
+import { App } from '@/app/App';
+import { websocketClient } from '@/app/clients/websocketClient';
+
+import '@/app/styles/globals.scss';
+
+websocketClient.connect();
+
+const container = document.getElementById('root');
+if (!container) {
+  throw new Error('Root container #root not found in index.html');
+}
+
+createRoot(container).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);

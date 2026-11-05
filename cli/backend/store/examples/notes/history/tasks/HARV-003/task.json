@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "task_id": "HARV-003",
+  "topic": "Реализовать backend для статуса синхронизации данных",
+  "source": {
+    "path": "source.txt",
+    "source_id_mismatch": false
+  },
+  "backlog": {
+    "index_link": "../../../tasks/backlog/tasks.json",
+    "stages_link": "../../../tasks/backlog/stages.json",
+    "queue_link": "../../../tasks/backlog/dev/stages/backend/queue.json"
+  },
+  "runtime": {
+    "current_stage": "backend",
+    "status": "ready_for_next_stage",
+    "revision": 4,
+    "lease": null,
+    "updated_at": "2026-06-04T19:30:00+03:00"
+  },
+  "artifacts": {
+    "briefs": [
+      {
+        "type": "analysis",
+        "role": "analyst",
+        "path": "history/briefs/analyst/HARV-003.analysis-brief.md",
+        "created_at": "2026-06-04T19:30:00+03:00"
+      }
+    ],
+    "specifications": [
+      {
+        "type": "developer",
+        "role": "analyst",
+        "path": "history/specifications/HARV-003.developer-spec.md",
+        "created_at": "2026-06-04T19:30:00+03:00"
+      }
+    ],
+    "reports": [
+      {
+        "type": "architecture",
+        "role": "architect",
+        "path": "history/reports/architect/HARV-003.architecture-report.md",
+        "created_at": "2026-06-04T19:30:00+03:00"
+      }
+    ],
+    "memory": [
+      {
+        "role": "analyst",
+        "path": "history/memory/analyst/HARV-003.md",
+        "created_at": "2026-06-04T19:30:00+03:00"
+      },
+      {
+        "role": "architect",
+        "path": "history/memory/architect/HARV-003.md",
+        "created_at": "2026-06-04T19:30:00+03:00"
+      }
+    ],
+    "chats": [],
+    "questions": []
+  },
+  "questions": [],
+  "events": [
+    {
+      "at": "2026-06-04T19:30:00+03:00",
+      "type": "task_created",
+      "stage": "intake",
+      "status": "new",
+      "actor": "demo-seed"
+    },
+    {
+      "at": "2026-06-04T19:30:00+03:00",
+      "type": "task_moved",
+      "stage": "analysis",
+      "status": "ready_for_next_stage",
+      "actor": "demo-seed",
+      "note": "intake -> analysis"
+    },
+    {
+      "at": "2026-06-04T19:30:00+03:00",
+      "type": "analysis_completed",
+      "stage": "analysis",
+      "status": "ready_for_next_stage",
+      "actor": "demo-seed"
+    },
+    {
+      "at": "2026-06-04T19:30:00+03:00",
+      "type": "task_moved",
+      "stage": "backend",
+      "status": "ready_for_next_stage",
+      "actor": "demo-seed",
+      "note": "architecture -> backend"
+    }
+  ]
+}

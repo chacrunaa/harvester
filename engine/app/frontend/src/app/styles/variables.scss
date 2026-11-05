@@ -1,0 +1,74 @@
+// Design tokens — strict from docs/design-system-template.md (Figma node 123:1714).
+// Used by native shell components in their *.module.scss.
+// MUI atoms read the equivalent values from app/theme.ts.
+
+// Colors
+$color-brand-teal:      #00625a;
+$color-primary:         #1976d2;
+$color-secondary:       #9c27b0;
+$color-tertiary-purple: #4f378a;
+$color-info:            #0288d1;
+$color-success:         #2e7d32;
+$color-error:           #d32f2f;
+
+$bg-main-area:          #e9f9f1;
+$bg-system-message:     #e9f0ff;
+$border-report-card:    #d0bcff;
+$border-divider:        #d9d9d9;
+$bg-analysis-card:      #f7faff;
+$border-analysis-card:  #d9e5f7;
+$bg-token-card:         #fcfcfc;
+$border-token-card:     #d9d9d9;
+
+$text-primary:          rgba(0, 0, 0, 0.87);
+$text-disabled:         rgba(0, 0, 0, 0.38);
+$action-disabled:       rgba(0, 0, 0, 0.26);
+$text-muted:            #9e9e9e;
+$text-muted-light:      #b8b8b8;
+$bg-number-chip:        #9dd1ff;
+
+$header-text-active:    #ffffff;
+$header-text-inactive:  rgba(255, 255, 255, 0.6);
+$header-text-hover:     rgba(255, 255, 255, 0.85);
+
+// Spacing
+$space-header-x:        24px;
+$space-main-x:          16px;
+$space-sidebar:         16px;
+$space-card-status:     14px;
+$space-card-report:     10px;
+$space-card-qna:        16px;
+$gap-main-inner:        10px;
+$gap-active-chat:       30px;
+$gap-report-status:     20px;
+
+// Sizes
+$size-header-h:         56px;
+$size-section-header-h: 40px;
+$size-sidebar-w:        300px;
+$size-main-inner-w:     1320px;
+$size-modal-w:          440px;
+$size-status-zone-h:    320px;
+
+// Radii
+$radius-section:        20px;
+$radius-card:           8px;
+$radius-card-qna:       12px;
+$radius-pill:           16px;
+$radius-button:         4px;
+
+// Typography
+$font-overline:         12px;
+$font-body2:            14px;
+$font-subtitle2:        14px;
+$font-button-medium:    14px;
+$font-button-small:     13px;
+$font-caption:          12px;
+$font-meta-small:       10px;
+$font-modal-title:      20px;
+
+// Breakpoints
+$bp-tablet-landscape: 1024px;
+$bp-tablet:           768px;
+$bp-phone-large:      480px;
+$bp-phone-min:        360px;
